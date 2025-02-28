@@ -1,6 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dc18ri31g1st5"]
+[gd_scene load_steps=11 format=3 uid="uid://dc18ri31g1st5"]
 
+[ext_resource type="Script" path="res://velo.gd" id="1_5i678"]
 [ext_resource type="Material" uid="uid://dpjq45cy755js" path="res://vector.tres" id="2_o50fg"]
+[ext_resource type="Script" path="res://badvector.gd" id="3_0lj5w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_espfw"]
 size = Vector3(60, 2, 60)
@@ -9,49 +11,7 @@ size = Vector3(60, 2, 60)
 size = Vector3(60, 2, 60)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_d24tg"]
-
-[sub_resource type="GDScript" id="GDScript_uk20n"]
-script/source = "extends StaticBody3D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	print(\"hi\")
-	const vx = 1
-	const vy = 0
-	const vz = 0
-	
-	var particle = get_node(\"/root/main/particle\")
-	
-	var pos = particle.position
-	
-	var px = pos[0]
-	var py = pos[1]
-	var pz = pos[2]
-	
-	var bx = vy * pz - py * vz
-	var by = -1 * (vx * pz - vz * px)
-	var bz = (vx * py - vy * px)
-	
-	var xy = (bx ** 2 + by ** 2) ** (1/2)
-	var angleZ = tan(bz / xy)
-	var angleX = tan(bx / by)
-	
-	var vector = get_node(\"/root/main/badvector\")
-	print(\"anglex: \", bx)
-	print(\"angelz: \", bz)
-	vector.rotation.x = angleX
-	vector.rotation.y = angleZ
-
-	
-	
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+radius = 0.519379
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8k1fr"]
 top_radius = 0.25
@@ -60,6 +20,14 @@ bottom_radius = 0.25
 [sub_resource type="CylinderMesh" id="CylinderMesh_81y7w"]
 top_radius = 0.0
 height = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5llwy"]
+top_radius = 0.0
+bottom_radius = 0.0
+height = 7.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1q05r"]
+height = 7.0
 
 [node name="main" type="Node3D"]
 physics_interpolation_mode = 2
@@ -76,31 +44,55 @@ transform = Transform3D(1, 7.45058e-09, 0, 9.31323e-10, 1, 0, 0, -4.47035e-08, 1
 mesh = SubResource("BoxMesh_ava38")
 
 [node name="particle" type="RigidBody3D" parent="."]
-physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1014, 4.00768, 0.792666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 4)
+constant_force = Vector3(0, 9.81, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="particle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
 shape = SubResource("SphereShape3D_d24tg")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="particle/CollisionShape3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.53524, 0.71841, 6.46463)
 radial_segments = 64
 rings = 32
 
-[node name="badvector" type="StaticBody3D" parent="."]
+[node name="velo" type="StaticBody3D" parent="."]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47785, 1.23499, 0)
-script = SubResource("GDScript_uk20n")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09042, 5.22116, 5.58127)
+script = ExtResource("1_5i678")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="badvector"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="velo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 rotation_edit_mode = 2
 mesh = SubResource("CylinderMesh_8k1fr")
 surface_material_override/0 = ExtResource("2_o50fg")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="badvector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54868, 0)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="velo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 mesh = SubResource("CylinderMesh_81y7w")
 surface_material_override/0 = ExtResource("2_o50fg")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="velo"]
+visible = false
+mesh = SubResource("CylinderMesh_5llwy")
+
+[node name="badvector" type="StaticBody3D" parent="."]
+physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 4.37114e-08, -4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0, 1, 0)
+script = ExtResource("3_0lj5w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="badvector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_8k1fr")
+surface_material_override/0 = ExtResource("2_o50fg")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="badvector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+mesh = SubResource("CylinderMesh_81y7w")
+surface_material_override/0 = ExtResource("2_o50fg")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="badvector"]
+visible = false
+mesh = SubResource("CylinderMesh_1q05r")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.0491287, 0, 0.998792, 0, 1, 0, -0.998792, 0, 0.0491287, 14.7608, 2.14946, 0.0305552)
@@ -109,3 +101,4 @@ transform = Transform3D(0.0491287, 0, 0.998792, 0, 1, 0, -0.998792, 0, 0.0491287
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.687, 0)
 light_energy = 9.856
 light_indirect_energy = 12.088
+omni_range = 205.084
