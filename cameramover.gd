@@ -1,9 +1,10 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+@export var SPEED = 5.0
+#const JUMP_VELOCITY = 4.5
 @export var sensitivity: float = 0.2
+var locked = true
 
 var rotation_input: Vector3 = Vector3.ZERO
 
@@ -13,6 +14,8 @@ func _ready() -> void:
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
+		if not locked:
+			return
 		var yaw = -event.relative.x * sensitivity
 		var pitch = -event.relative.y * sensitivity
 
@@ -22,16 +25,28 @@ func _unhandled_input(event):
 		var new_basis = Basis()
 		new_basis = new_basis.rotated(Vector3.RIGHT, deg_to_rad(rotation_input.x))
 		new_basis = new_basis.rotated(Vector3.UP, deg_to_rad(rotation_input.y))
-		new_basis = new_basis.rotated(Vector3.FORWARD, deg_to_rad(rotation_input.z))
+		#new_basis = new_basis.rotated(Vector3.FORWARD, deg_to_rad(rotation_input.z))
 
 		basis = new_basis
 	
 	
 func _physics_process(delta: float) -> void:
+		
 	var direction = Vector3.ZERO
 	
-	if Input.is_action_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel"):
+		if locked:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		locked = not locked
+		
+	if Input.is_action_pressed("quit"):
 		get_tree().quit()
+		
+	if not locked: #superb control flow
+		return
+	
 	# We check for each move input and update the direction accordingly.
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1

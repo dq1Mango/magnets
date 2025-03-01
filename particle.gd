@@ -1,9 +1,11 @@
-extends StaticBody3D
+extends RigidBody3D
 
+@export var static_velocity: Vector3
 
+var orientVector = preload("res://orientVector.gd").new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var particle = get_node("/root/main/particle")
+	rotation = orientVector.orientVector(static_velocity)
 	
 	pass # Replace with function body.
 
