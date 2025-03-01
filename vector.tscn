@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://clgqe6cw3oo0"]
+
+[ext_resource type="Script" path="res://vector.gd" id="1_17wdu"]
+[ext_resource type="Material" uid="uid://dpjq45cy755js" path="res://vector.tres" id="1_duujb"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n8xq7"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_u70vb"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3cvd3"]
+
+[node name="vector" type="StaticBody3D"]
+script = ExtResource("1_17wdu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+mesh = SubResource("CylinderMesh_n8xq7")
+surface_material_override/0 = ExtResource("1_duujb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+mesh = SubResource("CylinderMesh_u70vb")
+surface_material_override/0 = ExtResource("1_duujb")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CylinderMesh_3cvd3")

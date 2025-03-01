@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dc18ri31g1st5"]
+[gd_scene load_steps=12 format=3 uid="uid://dc18ri31g1st5"]
 
 [ext_resource type="Script" path="res://velo.gd" id="1_5i678"]
+[ext_resource type="Script" path="res://main.gd" id="1_qioq1"]
+[ext_resource type="PackedScene" uid="uid://b7ys6vqg6v8yi" path="res://vector_scene.tscn" id="2_m7iha"]
 [ext_resource type="Material" uid="uid://dpjq45cy755js" path="res://vector.tres" id="2_o50fg"]
-[ext_resource type="Script" path="res://badvector.gd" id="3_0lj5w"]
+[ext_resource type="Script" path="res://cameramover.gd" id="5_s126l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_espfw"]
 size = Vector3(60, 2, 60)
@@ -14,23 +16,21 @@ size = Vector3(60, 2, 60)
 radius = 0.519379
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8k1fr"]
-top_radius = 0.25
-bottom_radius = 0.25
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.75
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_81y7w"]
 top_radius = 0.0
-height = 1.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_5llwy"]
-top_radius = 0.0
-bottom_radius = 0.0
-height = 7.0
+bottom_radius = 0.2
+height = 0.25
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_1q05r"]
-height = 7.0
 
 [node name="main" type="Node3D"]
 physics_interpolation_mode = 2
+script = ExtResource("1_qioq1")
+vector_scene = ExtResource("2_m7iha")
 
 [node name="da ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -57,48 +57,34 @@ rings = 32
 
 [node name="velo" type="StaticBody3D" parent="."]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09042, 5.22116, 5.58127)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 4)
 script = ExtResource("1_5i678")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-rotation_edit_mode = 2
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="velo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
 mesh = SubResource("CylinderMesh_8k1fr")
 surface_material_override/0 = ExtResource("2_o50fg")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="velo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 mesh = SubResource("CylinderMesh_81y7w")
 surface_material_override/0 = ExtResource("2_o50fg")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="velo"]
-visible = false
-mesh = SubResource("CylinderMesh_5llwy")
-
-[node name="badvector" type="StaticBody3D" parent="."]
-physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 4.37114e-08, -4.37114e-08, 1.91069e-15, 1, 0, -1, 1.91069e-15, 0, 1, 0)
-script = ExtResource("3_0lj5w")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="badvector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CylinderMesh_8k1fr")
-surface_material_override/0 = ExtResource("2_o50fg")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="badvector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
-mesh = SubResource("CylinderMesh_81y7w")
-surface_material_override/0 = ExtResource("2_o50fg")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="badvector"]
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="velo"]
 visible = false
 mesh = SubResource("CylinderMesh_1q05r")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.0491287, 0, 0.998792, 0, 1, 0, -0.998792, 0, 0.0491287, 14.7608, 2.14946, 0.0305552)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.687, 0)
 light_energy = 9.856
 light_indirect_energy = 12.088
 omni_range = 205.084
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+physics_interpolation_mode = 2
+motion_mode = 1
+script = ExtResource("5_s126l")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+physics_interpolation_mode = 2
+transform = Transform3D(0.0491287, 0, 0.998792, 0, 1, 0, -0.998792, 0, 0.0491287, 14.7608, 2.14946, 0.0305552)
