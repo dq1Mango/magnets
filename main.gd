@@ -14,9 +14,6 @@ func orientVector(vector) -> Vector3:
 	rotate.z = originalVector.signed_angle_to(vector, Vector3(0, 0, 1))
 	originalVector = originalVector.rotated(Vector3(0, 0, 1), rotate.z)
 	
-	#print(originalVector)
-	#print(rotate)
-	
 	return rotate
 	
 func draw_field(coords: Vector3) -> void:
@@ -26,28 +23,34 @@ func draw_field(coords: Vector3) -> void:
 	
 	var pos = particle.position
 	var distance = pos - coords
-	#print("pos:", pos)
 	#var velo = get_node("/root/main/velo")
 	
 	#velo.position = pos
 	
-	var field = veloVector.cross(-1 * pos)
-	
+	var field = veloVector.cross(-1 * distance)
+
 	var vector = vector_scene.instantiate()
+	
+	#i wanna do this:
+	#vector.initialize(coords, field)
+	
+	#but am forced to do this:
 	vector.position = coords
 	vector.rotation = orientVector(field)
+	
+	
 	add_child(vector)
-	#vector.initialize(coords, field)
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	Input.MOUSE_MODE_CAPTURED
+	
 	#var ogVector = get_node("./badvector")
-	for i in range(0, 5):
+	for i in range(-10, 10):
 		for j in range(0, 5):
-			for k in range(0, 5):
+			for k in range(-10, 10):
 				draw_field(Vector3(i, j, k))
-				#ogVector.position = Vector3(i, j, k)
-				#var newVector = ogVector.duplicate(7)
 				pass
 				
 	pass # Replace with function body.

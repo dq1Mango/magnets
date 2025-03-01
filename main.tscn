@@ -80,11 +80,13 @@ light_energy = 9.856
 light_indirect_energy = 12.088
 omni_range = 205.084
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="view_point" type="CharacterBody3D" parent="."]
 physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+rotation_edit_mode = 2
 motion_mode = 1
 script = ExtResource("5_s126l")
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+[node name="Camera3D" type="Camera3D" parent="view_point"]
 physics_interpolation_mode = 2
-transform = Transform3D(0.0491287, 0, 0.998792, 0, 1, 0, -0.998792, 0, 0.0491287, 14.7608, 2.14946, 0.0305552)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
