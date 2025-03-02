@@ -1,0 +1,4 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://by05fmyyf6yid"]
+
+[resource]
+backlight = Color(1, 1, 1, 1)

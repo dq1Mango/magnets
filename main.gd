@@ -17,13 +17,15 @@ func calc_magnet(coords: Vector3):
 	var field = Vector3.ZERO
 	for particle in particles:
 		var distance = coords - particle.position
+		if distance == Vector3.ZERO:
+			return Vector3.ZERO
 		field += particle.static_velocity.cross(distance.normalized()) / distance.length_squared()
 		 
 			
 	return field
 	
-func initializeVector(position, field: Vector3, maxMagnet, minMagnet: int):
-
+func initializeVector(pos, field: Vector3, maxMagnet, minMagnet: int):
+	  
 	var vector = vector_scene.instantiate()
 	
 	var magnitude = field.length()
@@ -32,20 +34,30 @@ func initializeVector(position, field: Vector3, maxMagnet, minMagnet: int):
 				
 	var colorPercent = ((magnitude - minMagnet ) / (maxMagnet - minMagnet)) ** (1.0/2.0)
 	var color = colorMax * colorPercent + colorMin * (1 - colorPercent)
+	color.a = colorPercent * 5
+	#if color.a > 200:
+		
+	#	print(color.a)
+	#print(color)
 	#print(color)
 
 	#i wanna do this:
 	#vector.initialize(coords, field)
 	#but am forced to do this:
-	vector.position = Vector3(position)
+	vector.position = Vector3(pos)
 	vector.rotation = orientVector.orientVector(field) #STILL USING EULER ROTATION
+	
 	var mesh = vector.get_child(0)
 	var new_material = StandardMaterial3D.new()
+	new_material.blend_mode = StandardMaterial3D.BLEND_MODE_ADD
+	new_material.transparency = StandardMaterial3D.TRANSPARENCY_ALPHA
+	new_material.cull_mode = StandardMaterial3D.CULL_DISABLED
 	new_material.albedo_color = color
 	mesh.get_child(0).material_override = new_material
 	mesh.get_child(1).material_override = new_material
 	
 	add_child(vector)
+	
 func draw_field() -> void:
 	
 	var minMagnet = 1
@@ -89,13 +101,10 @@ func _ready() -> void:
 		print("ERROR: invalid field dimensions")
 		get_tree().quit()
 	
-	Input.MOUSE_MODE_CAPTURED
-	
 	#var ogVector = get_node("./badvector")
 	#draw da field
 	draw_field()
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
