@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://main.gd" id="1_qioq1"]
 [ext_resource type="PackedScene" uid="uid://b7ys6vqg6v8yi" path="res://vector_scene.tscn" id="2_m7iha"]
 [ext_resource type="Script" path="res://particle.gd" id="3_ynkgf"]
-[ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://particle.tres" id="4_rjiav"]
+[ext_resource type="Material" path="res://particle.tres" id="4_rjiav"]
 [ext_resource type="Script" path="res://cameramover.gd" id="5_s126l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_espfw"]
@@ -99,7 +99,6 @@ script = ExtResource("5_s126l")
 
 [node name="Camera3D" type="Camera3D" parent="view_point"]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="particle2" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 4)

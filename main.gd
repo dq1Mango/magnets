@@ -45,6 +45,7 @@ func initializeVector(pos, field: Vector3, maxMagnet, minMagnet: int):
 	#vector.initialize(coords, field)
 	#but am forced to do this:
 	vector.position = Vector3(pos)
+	#print("position: ", pos)
 	vector.rotation = orientVector.orientVector(field) #STILL USING EULER ROTATION
 	
 	var mesh = vector.get_child(0)
