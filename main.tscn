@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://dc18ri31g1st5"]
+[gd_scene load_steps=16 format=3 uid="uid://dc18ri31g1st5"]
 
 [ext_resource type="Script" path="res://velo.gd" id="1_5i678"]
 [ext_resource type="Script" path="res://main.gd" id="1_qioq1"]
 [ext_resource type="PackedScene" uid="uid://b7ys6vqg6v8yi" path="res://vector_scene.tscn" id="2_m7iha"]
+[ext_resource type="PackedScene" uid="uid://dari0htpxc42v" path="res://particle.tscn" id="3_ob8px"]
 [ext_resource type="Script" path="res://particle.gd" id="3_ynkgf"]
-[ext_resource type="Material" path="res://particle.tres" id="4_rjiav"]
+[ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://particle.tres" id="4_rjiav"]
 [ext_resource type="Script" path="res://cameramover.gd" id="5_s126l"]
+[ext_resource type="Script" path="res://spawn.gd" id="7_nnsm1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_espfw"]
 size = Vector3(60, 2, 60)
@@ -28,10 +30,13 @@ height = 0.25
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_1q05r"]
 
+[sub_resource type="Theme" id="Theme_iiu1k"]
+
 [node name="main" type="Node3D" node_paths=PackedStringArray("particles")]
 physics_interpolation_mode = 2
 script = ExtResource("1_qioq1")
 vector_scene = ExtResource("2_m7iha")
+particle_scene = ExtResource("3_ob8px")
 particles = [NodePath("particle"), NodePath("particle2"), NodePath("particle3"), NodePath("particle4")]
 fieldStart = Vector3(-10, 0, -10)
 fieldEnd = Vector3(10, 10, 10)
@@ -52,6 +57,7 @@ mesh = SubResource("BoxMesh_ava38")
 [node name="particle" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 sleeping = true
+freeze = true
 constant_force = Vector3(0, 9.81, 0)
 script = ExtResource("3_ynkgf")
 static_velocity = Vector3(0, 0, -1)
@@ -103,6 +109,7 @@ physics_interpolation_mode = 2
 [node name="particle2" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 4)
 sleeping = true
+freeze = true
 constant_force = Vector3(0, 9.81, 0)
 script = ExtResource("3_ynkgf")
 static_velocity = Vector3(0, 0, -1)
@@ -137,6 +144,7 @@ mesh = SubResource("CylinderMesh_1q05r")
 [node name="particle3" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 2)
 sleeping = true
+freeze = true
 constant_force = Vector3(0, 9.81, 0)
 script = ExtResource("3_ynkgf")
 static_velocity = Vector3(0, 0, -1)
@@ -171,6 +179,7 @@ mesh = SubResource("CylinderMesh_1q05r")
 [node name="particle4" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 6)
 sleeping = true
+freeze = true
 constant_force = Vector3(0, 9.81, 0)
 script = ExtResource("3_ynkgf")
 static_velocity = Vector3(0, 0, -1)
@@ -201,3 +210,21 @@ surface_material_override/0 = ExtResource("4_rjiav")
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="particle4/velo"]
 visible = false
 mesh = SubResource("CylinderMesh_1q05r")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_iiu1k")
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 152.0
+offset_bottom = 55.0
+text = "Add Particle (N)"
+script = ExtResource("7_nnsm1")
+
+[connection signal="pressed" from="Control/Button" to="." method="newParticle"]

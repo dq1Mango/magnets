@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://dari0htpxc42v"]
+
+[ext_resource type="Script" path="res://particle.gd" id="1_355we"]
+[ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://particle.tres" id="2_7i3wg"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ejk67"]
+radius = 0.519379
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_k3n3u"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_io66a"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7y44s"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="particle" type="RigidBody3D" parent="."]
+sleeping = true
+freeze = true
+constant_force = Vector3(0, 9.81, 0)
+script = ExtResource("1_355we")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="particle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
+shape = SubResource("SphereShape3D_ejk67")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="particle/CollisionShape3D"]
+radial_segments = 64
+rings = 32
+material = ExtResource("2_7i3wg")
+
+[node name="velo" type="StaticBody3D" parent="particle"]
+physics_interpolation_mode = 2
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="particle/velo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+mesh = SubResource("CylinderMesh_k3n3u")
+surface_material_override/0 = ExtResource("2_7i3wg")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="particle/velo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+mesh = SubResource("CylinderMesh_io66a")
+surface_material_override/0 = ExtResource("2_7i3wg")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="particle/velo"]
+visible = false
+mesh = SubResource("CylinderMesh_7y44s")
