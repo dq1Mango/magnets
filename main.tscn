@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dc18ri31g1st5"]
+[gd_scene load_steps=18 format=3 uid="uid://dc18ri31g1st5"]
 
 [ext_resource type="Script" path="res://velo.gd" id="1_5i678"]
 [ext_resource type="Script" path="res://main.gd" id="1_qioq1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://particle.tres" id="4_rjiav"]
 [ext_resource type="Script" path="res://cameramover.gd" id="5_s126l"]
 [ext_resource type="Script" path="res://spawn.gd" id="7_nnsm1"]
+[ext_resource type="Script" path="res://ana_error.gd" id="8_wh8sc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_espfw"]
 size = Vector3(60, 2, 60)
@@ -31,6 +32,9 @@ height = 0.25
 [sub_resource type="CylinderMesh" id="CylinderMesh_1q05r"]
 
 [sub_resource type="Theme" id="Theme_iiu1k"]
+
+[sub_resource type="Theme" id="Theme_sgk8b"]
+default_font_size = 30
 
 [node name="main" type="Node3D" node_paths=PackedStringArray("particles")]
 physics_interpolation_mode = 2
@@ -217,6 +221,18 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = SubResource("Theme_iiu1k")
+
+[node name="anaError" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+offset_left = 274.0
+offset_top = 164.0
+offset_right = 891.0
+offset_bottom = 254.0
+theme = SubResource("Theme_sgk8b")
+bbcode_enabled = true
+text = "[center]Particle already exists at this location[/center]"
+scroll_active = false
+script = ExtResource("8_wh8sc")
 
 [node name="Button" type="Button" parent="Control"]
 layout_mode = 0

@@ -22,7 +22,6 @@ func calc_magnet(coords: Vector3):
 			return Vector3.ZERO
 		field += particle.static_velocity.cross(distance.normalized()) / distance.length_squared()
 		 
-			
 	return field
 	
 func initializeVector(pos, field: Vector3, maxMagnet, minMagnet: int):
@@ -134,10 +133,19 @@ func vectorFromAngles(angles: Vector3) -> Vector3:
 
 func newParticle() -> void:
 
+	var camera = $"./view_point"
+	var currentPosition = round(camera.position) #need to change this is we ever wanna change field densithy
+	for particle in particles:
+		if particle.position == currentPosition:
+			var message = $"./Control/anaError"
+			message.beUseful()
+			#showExists()
+			return
+	
 	var particleScene = particle_scene.instantiate()
 	var particle = particleScene.get_child(0)
-	var camera = $"./view_point"
-	particle.position = round(camera.position) #need to change this is we ever wanna change field densithy
+	
+	particle.position = currentPosition
 	particle.static_velocity = vectorFromAngles(camera.rotation)
 
 	particles.append(particle)
@@ -145,3 +153,4 @@ func newParticle() -> void:
 	clearVectors()
 	draw_field()
 	pass # Replace with function body.
+	
