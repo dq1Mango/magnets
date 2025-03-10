@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://cby8nvcymfwok"]
+
+[ext_resource type="Script" path="res://cameramover.gd" id="1_j28ox"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bq5yu"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qa5jm"]
+size = Vector3(60, 2, 60)
+
+[node name="main" type="Node3D"]
+
+[node name="da ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="da ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9738e-13, -6.06782e-05, 6.59176e-06)
+shape = SubResource("BoxShape3D_bq5yu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="da ground"]
+transform = Transform3D(1, 7.45058e-09, 0, 9.31323e-10, 1, 0, 0, -4.47035e-08, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_qa5jm")
+
+[node name="view_point" type="CharacterBody3D" parent="."]
+physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+rotation_edit_mode = 2
+motion_mode = 1
+script = ExtResource("1_j28ox")
+
+[node name="Camera3D" type="Camera3D" parent="view_point"]
+physics_interpolation_mode = 2
