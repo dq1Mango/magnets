@@ -154,3 +154,8 @@ func newParticle() -> void:
 	draw_field()
 	pass # Replace with function body.
 	
+func handInput(event) -> void:
+	#spawn particle
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_N:
+			newParticle()

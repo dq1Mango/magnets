@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cby8nvcymfwok"]
+[gd_scene load_steps=7 format=3 uid="uid://cby8nvcymfwok"]
 
-[ext_resource type="Script" path="res://cameramover.gd" id="1_j28ox"]
+[ext_resource type="Script" path="res://scripts/simulation.gd" id="1_hwj0y"]
+[ext_resource type="Script" path="res://scripts/cameramover.gd" id="1_j28ox"]
+[ext_resource type="PackedScene" uid="uid://clgqe6cw3oo0" path="res://vector.tscn" id="2_x7fqn"]
+[ext_resource type="PackedScene" uid="uid://dari0htpxc42v" path="res://particle.tscn" id="3_55c0f"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bq5yu"]
 size = Vector3(60, 2, 60)
@@ -9,6 +12,10 @@ size = Vector3(60, 2, 60)
 size = Vector3(60, 2, 60)
 
 [node name="main" type="Node3D"]
+script = ExtResource("1_hwj0y")
+vector_scene = ExtResource("2_x7fqn")
+particle_scene = ExtResource("3_55c0f")
+permeability = 10.0
 
 [node name="da ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

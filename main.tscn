@@ -1,14 +1,14 @@
 [gd_scene load_steps=18 format=3 uid="uid://dc18ri31g1st5"]
 
-[ext_resource type="Script" path="res://velo.gd" id="1_5i678"]
-[ext_resource type="Script" path="res://main.gd" id="1_qioq1"]
+[ext_resource type="Script" path="res://scripts/velo.gd" id="1_5i678"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_qioq1"]
 [ext_resource type="PackedScene" uid="uid://b7ys6vqg6v8yi" path="res://vector_scene.tscn" id="2_m7iha"]
 [ext_resource type="PackedScene" uid="uid://dari0htpxc42v" path="res://particle.tscn" id="3_ob8px"]
-[ext_resource type="Script" path="res://particle.gd" id="3_ynkgf"]
+[ext_resource type="Script" path="res://scripts/particle.gd" id="3_ynkgf"]
 [ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://particle.tres" id="4_rjiav"]
-[ext_resource type="Script" path="res://cameramover.gd" id="5_s126l"]
-[ext_resource type="Script" path="res://spawn.gd" id="7_nnsm1"]
-[ext_resource type="Script" path="res://ana_error.gd" id="8_wh8sc"]
+[ext_resource type="Script" path="res://scripts/cameramover.gd" id="5_s126l"]
+[ext_resource type="Script" path="res://scripts/spawn.gd" id="7_nnsm1"]
+[ext_resource type="Script" path="res://scripts/ana_error.gd" id="8_wh8sc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_espfw"]
 size = Vector3(60, 2, 60)

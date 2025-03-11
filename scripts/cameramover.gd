@@ -14,12 +14,6 @@ func _ready() -> void:
 
 func _unhandled_input(event):
 	
-	#spawn particle
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_N:
-			var main = get_node("/root/main")
-			main.newParticle()
-	
 	#move mouse (with the help of LLMs)
 	if event is InputEventMouseMotion:
 		if not locked:
