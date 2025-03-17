@@ -8,11 +8,12 @@ var orientVector = preload("res://orientVector.gd").new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-	rotation = orientVector.orientVector(static_velocity)
+	$velo.rotation = orientVector.orientVector(static_velocity)
 	linear_velocity = static_velocity
 
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	$velo.rotation = orientVector.orientVector(linear_velocity)
 	pass

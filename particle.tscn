@@ -21,7 +21,7 @@ height = 0.25
 [node name="Node3D" type="Node3D"]
 
 [node name="particle" type="RigidBody3D" parent="."]
-sleeping = true
+can_sleep = false
 freeze = true
 script = ExtResource("1_355we")
 charge = 1

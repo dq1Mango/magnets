@@ -16,6 +16,7 @@ script = ExtResource("1_hwj0y")
 vector_scene = ExtResource("2_x7fqn")
 particle_scene = ExtResource("3_55c0f")
 permeability = 10.0
+permitivity = 10.0
 
 [node name="da ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

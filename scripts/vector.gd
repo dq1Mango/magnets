@@ -12,7 +12,6 @@ func initialize(pos, field: Vector3) -> void:
 	
 
 func _ready() -> void:
-	print('im ready')
 	pass # Replace with function body.
 
 
