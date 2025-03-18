@@ -7,13 +7,18 @@ extends Node3D
 @export var permitivity: float
 
 var orientVector = preload("res://orientVector.gd").new()
-
 var paused = true
 var doMagnetism = true
 var doElectricity = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	var ui_scene = load("res://options.tscn") 
+	var ui = ui_scene.instantiate()
+	ui.visible = false
+	add_child(ui)
+	
 	pass # Replace with function body.
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -30,7 +35,6 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			#elegant freezing and unfreezing with boolean logic
 			#for particle in particles:
 			#	particle.freeze = paused
-				
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

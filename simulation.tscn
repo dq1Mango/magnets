@@ -11,7 +11,7 @@ size = Vector3(60, 2, 60)
 [sub_resource type="BoxMesh" id="BoxMesh_qa5jm"]
 size = Vector3(60, 2, 60)
 
-[node name="main" type="Node3D"]
+[node name="simulation" type="Node3D"]
 script = ExtResource("1_hwj0y")
 vector_scene = ExtResource("2_x7fqn")
 particle_scene = ExtResource("3_55c0f")

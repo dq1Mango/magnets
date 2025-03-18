@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu1ls85uese78"]
+
+[ext_resource type="Script" path="res://scripts/options.gd" id="1_s5leu"]
+
+[node name="options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s5leu")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -158.0
+offset_right = 204.0
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.25
+
+[node name="Button" type="Button" parent="Control/BackPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+theme_override_font_sizes/font_size = 30
+text = "Back to Game"
+
+[node name="RepoPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="Button" type="Button" parent="Control/RepoPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+text = "Star My Repo 🥺"
+
+[node name="SettingsPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.75
+
+[node name="Button3" type="Button" parent="Control/SettingsPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+text = "Settings"
+
+[node name="TBDButton" type="Control" parent="Control"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.5
+
+[node name="Button" type="Button" parent="Control/TBDButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+text = "TBD"
+
+[node name="SpawnButton" type="Control" parent="Control"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.75
+
+[node name="Button" type="Button" parent="Control/SpawnButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+text = "Spawn Object"
+
+[node name="QuitPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Button2" type="Button" parent="Control/QuitPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+text = "Quit to Main Menu"
+
+[connection signal="pressed" from="Control/BackPad/Button" to="." method="hideSelf"]

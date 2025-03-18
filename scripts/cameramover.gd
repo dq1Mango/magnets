@@ -4,7 +4,7 @@ extends CharacterBody3D
 @export var SPEED = 5.0
 #const JUMP_VELOCITY = 4.5
 @export var sensitivity: float = 0.2
-var locked = true
+@export var locked = true
 
 var rotation_input: Vector3 = Vector3.ZERO
 
@@ -31,16 +31,20 @@ func _unhandled_input(event):
 
 		basis = new_basis
 	
-	
 func _physics_process(delta: float) -> void:
 		
 	var direction = Vector3.ZERO
 	
 	if Input.is_action_just_pressed("ui_cancel"):
+		
 		if locked:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		
+		#use this to always get "active" scene
+		get_node("/root/" + get_node("/root").get_child(0).name + "/options").visible = locked
+		
 		locked = not locked
 		
 	if Input.is_action_pressed("quit"):
