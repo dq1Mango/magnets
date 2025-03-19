@@ -5,11 +5,12 @@ extends Node3D
 @export var particles: Array[RigidBody3D]
 @export var permeability: float
 @export var permitivity: float
-@export var doMagnetism = true
-@export var doElectricity = true
 
 var orientVector = preload("res://orientVector.gd").new()
 var paused = true
+
+var doMagnetism = true
+var doElectricity = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,6 +36,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			#elegant freezing and unfreezing with boolean logic
 			#for particle in particles:
 			#	particle.freeze = paused
+			
+		if event.keycode == KEY_R:
+			restart()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -94,6 +98,7 @@ func newParticle() -> void:
 	var particle = particleScene.get_child(0)
 	
 	particle.position = currentPosition
+	particle.OGposition = currentPosition
 	particle.static_velocity = vectorFromAngles(camera.rotation)
 	particle.mass = 1
 
@@ -108,6 +113,8 @@ func newParticle() -> void:
 	vector.get_child(0).material_override = new_material
 	vector.get_child(1).material_override = new_material
 	
+	vector.visible = doMagnetism
+	
 	particle.add_child(vector)
 	
 	#give it a magnet force vector as well
@@ -118,6 +125,8 @@ func newParticle() -> void:
 	
 	electric_vector.get_child(0).material_override = new_electric_material
 	electric_vector.get_child(1).material_override = new_electric_material
+	
+	electric_vector.visible = doElectricity
 	
 	particle.add_child(electric_vector)
 	
@@ -161,3 +170,19 @@ func vectorFromAngles(angles: Vector3) -> Vector3:
 	
 	return originalVector
 	
+func toggleElectricity() -> void:
+	doElectricity = not doElectricity
+	
+	for particle in particles:
+		particle.get_child(3).visible = doElectricity
+	
+func toggleMagnetism() -> void:
+	doMagnetism = not doMagnetism
+	
+	for particle in particles:
+		particle.get_child(2).visible = doMagnetism
+
+func restart() -> void:
+	for particle in particles:
+		particle.linear_velocity = particle.static_velocity
+		particle.position = particle.OGposition

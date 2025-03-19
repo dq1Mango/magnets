@@ -2,8 +2,7 @@ extends Control
 
 var main
 var doMagnet = true
-var doElectric = true #we keep tradk of these global variables in two scripts, code goat material
-
+var doElectric = false #we keep tradk of these global variables in two scripts, code goat material
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,9 +20,15 @@ func goBack() -> void:
 	get_parent().get_node("Base").visible = true
 
 func toggleMagnet() -> void:
-	pass
+	doMagnet = not doMagnet
+	
+	$"Control/doMangetPad/Button".text = "doMagnet: " + str(doMagnet)
+	
+	main.toggleMagnetism()
 	
 func toggleElectric() -> void:
 	doElectric = not doElectric
 	
-	main.doElectricity = doElectric
+	$"Control/doElectricPad/Button".text = "doElectric: " + str(doElectric)
+	
+	main.toggleElectricity()

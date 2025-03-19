@@ -1,6 +1,7 @@
 extends RigidBody3D
 
 @export var static_velocity: Vector3
+@export var OGposition: Vector3
 @export var charge: int
 
 #i dont know why this errors but works if someone could please fix it that would be skibi-di
