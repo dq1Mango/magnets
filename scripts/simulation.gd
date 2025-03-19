@@ -5,11 +5,11 @@ extends Node3D
 @export var particles: Array[RigidBody3D]
 @export var permeability: float
 @export var permitivity: float
+@export var doMagnetism = true
+@export var doElectricity = true
 
 var orientVector = preload("res://orientVector.gd").new()
 var paused = true
-var doMagnetism = true
-var doElectricity = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

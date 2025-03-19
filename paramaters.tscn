@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcbjot3iwm3ew"]
+
+[ext_resource type="Script" path="res://scripts/paramaters.gd" id="1_k00c7"]
+
+[node name="Paramaters" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k00c7")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.0
+offset_top = -138.0
+offset_right = 201.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="doMangetPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_right = 0.5
+anchor_bottom = 0.25
+
+[node name="Button" type="Button" parent="Control/doMangetPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Toggle:Mag"
+
+[node name="doElectricPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.25
+
+[node name="Button" type="Button" parent="Control/doElectricPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Toggle:Elec"
+
+[node name="DonePad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Button" type="Button" parent="Control/DonePad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Done"
+
+[connection signal="pressed" from="Control/doElectricPad/Button" to="." method="toggleElectric"]
+[connection signal="pressed" from="Control/DonePad/Button" to="." method="goBack"]

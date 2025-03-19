@@ -96,6 +96,12 @@ func draw_field() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	var ui_scene = load("res://options.tscn") 
+	var ui = ui_scene.instantiate()
+	ui.visible = false
+	add_child(ui)
+	
 	dimensions = fieldEnd - fieldStart
 	center = (fieldStart + fieldEnd) / 2
 	if dimensions.x <= 0 or dimensions.y <= 0 or dimensions.z <= 0:
