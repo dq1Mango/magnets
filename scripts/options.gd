@@ -24,3 +24,9 @@ func hideSelf() -> void:
 func switchToParams() -> void:
 	$"./Base".visible = false
 	$"./Paramaters".visible = true
+
+
+
+
+func starRepo() -> void:
+	OS.shell_open("https://github.com/dq1Mango/magnets")

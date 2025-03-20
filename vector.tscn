@@ -19,15 +19,15 @@ height = 0.25
 [node name="vector" type="StaticBody3D"]
 script = ExtResource("1_17wdu")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="shaft" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
 mesh = SubResource("CylinderMesh_n8xq7")
 surface_material_override/0 = ExtResource("1_duujb")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="tip" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 mesh = SubResource("CylinderMesh_u70vb")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+[node name="filler" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("CylinderMesh_3cvd3")

@@ -11,6 +11,8 @@ var paused = true
 
 var doMagnetism = true
 var doElectricity = false
+var maxField = 10
+var maxLength = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -65,6 +67,10 @@ func _process(delta: float) -> void:
 		
 		particle.get_child(2).rotation = orientVector.orientVector(magnetField[i])
 		particle.get_child(3).rotation = orientVector.orientVector(electricField[i])
+		
+		#might wann remove the square root
+		particle.get_child(2).scaleLength(min(maxLength, sqrt(magnetField[i].length()) / maxField * maxLength))
+		particle.get_child(3).scaleLength(min(maxLength, sqrt(electricField[i].length()) / maxField * maxLength))
 		
 		var netForce = (1.0 / particle.mass) * (magnetForce + electricForce)
 		
