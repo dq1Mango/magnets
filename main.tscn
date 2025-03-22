@@ -42,8 +42,6 @@ script = ExtResource("1_qioq1")
 vector_scene = ExtResource("2_m7iha")
 particle_scene = ExtResource("3_ob8px")
 particles = [NodePath("particle"), NodePath("particle2"), NodePath("particle3"), NodePath("particle4")]
-fieldStart = Vector3(-10, 0, -10)
-fieldEnd = Vector3(10, 10, 10)
 colorMax = Color(1, 0, 0, 1)
 colorMin = Color(0, 0, 1, 1)
 
@@ -102,7 +100,6 @@ omni_range = 336.617
 
 [node name="view_point" type="CharacterBody3D" parent="."]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 rotation_edit_mode = 2
 motion_mode = 1
 script = ExtResource("5_s126l")
