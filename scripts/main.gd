@@ -6,6 +6,15 @@ extends Node3D
 @export var colorMax: Color
 @export var colorMin: Color
 
+var buildMode = false #from fortnite apparently
+var mass = 1
+var charge = 1
+var velo_scalar = 1
+var place_distance = 2
+@export var whereToGetThem: Array[PackedScene] = []
+var thingToSpawns = []
+var spawnIndex = 0
+
 var vectors: Dictionary = {}
 var field_radius = 5 #its not rly a radius but shhhhhh
 
@@ -47,7 +56,6 @@ func initializeVector(pos, field: Vector3) -> StaticBody3D:
 	#vector.initialize(coords, field)
 	#but am forced to do this:
 	vector.position = Vector3(pos)
-	#print("position: ", pos)	
 	var mesh = vector.get_child(0)
 	var new_material = StandardMaterial3D.new()
 	new_material.blend_mode = StandardMaterial3D.BLEND_MODE_ADD
@@ -63,7 +71,6 @@ func initializeVector(pos, field: Vector3) -> StaticBody3D:
 	return mesh
 	
 func draw_field(pos) -> void:
-	print("drawing field here: ", pos)
 	var start_time = Time.get_ticks_msec()  # Get time in milliseconds
 
 	for i in range(-field_radius + pos.x, field_radius + pos.x):
@@ -76,7 +83,6 @@ func draw_field(pos) -> void:
 				vectors[x][y] = {}
 			for k in range(-field_radius + pos.z, field_radius + pos.z):
 				var z = str(k)
-				#print(x, y, z)
 				if z not in vectors[x][y]:
 					var test = initializeVector(Vector3(i, j, k), magneticField[x][y][z])
 					vectors[x][y][z] = test
@@ -86,11 +92,10 @@ func draw_field(pos) -> void:
 					vectors[x][y][z] = test
 					
 				else:
-					#print(vectors[x][y][z])
 					formatVector(vectors[x][y][z], magneticField[x][y][z])
 	
-	var elapsed_time = Time.get_ticks_msec() - start_time
-	print("Function took ", elapsed_time, " ms")
+	#var elapsed_time = Time.get_ticks_msec() - start_time
+	#print("Function took ", elapsed_time, " ms")
 
 func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: bool):
 	
@@ -114,8 +119,8 @@ func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: b
 					
 				magneticField[x][y][str(k)] = field
 		
-	var elapsed_time = Time.get_ticks_msec() - start_time
-	print("calculating field took ", elapsed_time, " ms")
+	#var elapsed_time = Time.get_ticks_msec() - start_time
+	#print("calculating field took ", elapsed_time, " ms")
 	
 func calcNewField(pos) -> void:
 	magneticField = {} #TODO: make faster by using packed arrray
@@ -137,17 +142,25 @@ func _ready() -> void:
 	#	get_tree().quit()
 	
 	#var ogVector = get_node("./badvector")
-	var cameraPos = round($view_point.position)
+	var camera = $view_point
+	var cameraPos = round(camera.position)
 	calcNewField(cameraPos)
 	draw_field(cameraPos)
-	pass # Replace with function body.
+	
+	var particle_preview_scene = load("res://better_particle.tscn") 
+	var particlePreveiw = particle_preview_scene.instantiate()
+	particlePreveiw.visible = false
+	thingToSpawns.append(particlePreveiw)
+	add_child(particlePreveiw)
+	#particlePreveiw.position = Vector3(0, 0, -place_distance)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	var current_position = round($view_point.position)
+	var camera = $view_point
+	var current_position = round(camera.position)
 	if current_position != oldCameraPosition:
 		var diff = current_position - oldCameraPosition
-		print(diff)
 		# this is not ugly at all
 		#calcField(diff.x * field_radius + oldCameraPosition.x, diff.x * field_radius + current_position.x, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
 		#calcField(current_position.x - field_radius, current_position.x + field_radius, diff.y * field_radius + oldCameraPosition.y, diff.y * field_radius + current_position.y, current_position.z - field_radius, current_position.z + field_radius, false)
@@ -158,10 +171,12 @@ func _process(_delta: float) -> void:
 		
 		oldCameraPosition = current_position
 	
+	if buildMode:
+		var thing = thingToSpawns[spawnIndex]
+		thing.position = round(camera.position + vectorFromAngles(camera.rotation) * place_distance)
 	pass
 
 func clearVectors() -> void:
-	print("started with:", get_child_count())
 	for child in get_children():
 		if child.get_child_count() < 1:
 			continue
@@ -183,7 +198,8 @@ func vectorFromAngles(angles: Vector3) -> Vector3:
 func newParticle() -> void:
 
 	var camera = $"./view_point"
-	var currentPosition = round(camera.position) #need to change this is we ever wanna change field densithy
+	#var currentPosition = round(camera.position) #need to change this is we ever wanna change field densithy
+	var currentPosition = thingToSpawns[spawnIndex].position
 	for particle in particles:
 		if particle.position == currentPosition:
 			var message = $"./Control/anaError"
@@ -191,7 +207,8 @@ func newParticle() -> void:
 			#showExists()
 			return
 	
-	var particleScene = particle_scene.instantiate()
+	#var particleScene = particle_scene.instantiate()
+	var particleScene = whereToGetThem[spawnIndex].instantiate()
 	var particle = particleScene.get_child(0)
 	
 	particle.position = currentPosition
@@ -199,7 +216,8 @@ func newParticle() -> void:
 
 	particles.append(particle)
 	add_child(particleScene)
-	calcNewField(currentPosition)
+	calcNewField(camera.position)
+	draw_field(camera.position)
 	pass # Replace with function body.
 	
 func restart() -> void:
@@ -208,11 +226,27 @@ func restart() -> void:
 	
 	clearVectors()
 	
+func handleBuild():
+	var thing = thingToSpawns[spawnIndex]
+	
+	if buildMode:
+		newParticle()
+	
+	else:
+		
+		
+		print("made it visible")
+	
+	buildMode = not buildMode
+	
+	thing.visible = buildMode
+	
+	
 func _unhandled_key_input(event: InputEvent) -> void:
 	#spawn particle
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_N:
-			newParticle()
+			handleBuild()
 		
 		if event.keycode == KEY_R:
 			restart()
