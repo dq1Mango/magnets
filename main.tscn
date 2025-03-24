@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/velo.gd" id="1_5i678"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_qioq1"]
-[ext_resource type="PackedScene" uid="uid://b7ys6vqg6v8yi" path="res://vector_scene.tscn" id="2_m7iha"]
+[ext_resource type="PackedScene" uid="uid://clgqe6cw3oo0" path="res://vector.tscn" id="2_2qdwi"]
 [ext_resource type="PackedScene" uid="uid://dari0htpxc42v" path="res://particle.tscn" id="3_ob8px"]
 [ext_resource type="Script" path="res://scripts/particle.gd" id="3_ynkgf"]
 [ext_resource type="PackedScene" uid="uid://qceblbkkyp3n" path="res://better_particle.tscn" id="4_j6pvn"]
@@ -41,7 +41,7 @@ default_font_size = 30
 [node name="main" type="Node3D"]
 physics_interpolation_mode = 2
 script = ExtResource("1_qioq1")
-vector_scene = ExtResource("2_m7iha")
+vector_scene = ExtResource("2_2qdwi")
 particle_scene = ExtResource("3_ob8px")
 colorMax = Color(1, 0, 0, 1)
 colorMin = Color(0, 0, 1, 1)

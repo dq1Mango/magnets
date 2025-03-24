@@ -16,6 +16,7 @@ var thingToSpawns = []
 var spawnIndex = 0
 
 var vectors: Dictionary = {}
+var update = 0
 var field_radius = 5 #its not rly a radius but shhhhhh
 
 var orientVector = preload("res://orientVector.gd").new()
@@ -43,37 +44,38 @@ func formatVector(vector: StaticBody3D, field: Vector3) -> void:
 	color.a = colorPercent * 5
 	vector.get_child(0).material_override.albedo_color = color
 	vector.rotation = orientVector.orientVector(field) #STILL USING EULER ROTATION
+	vector.updatee = update
 
 func initializeVector(pos, field: Vector3) -> StaticBody3D:
 	 
-	var vector = vector_scene.instantiate()
-	
 	var magnitude = field.length()
 	if magnitude < 0.0000001:
 		return
 
+	var vector = vector_scene.instantiate()
+	
 	#i wanna do this:
 	#vector.initialize(coords, field)
 	#but am forced to do this:
 	vector.position = Vector3(pos)
-	var mesh = vector.get_child(0)
+	#var mesh = vector.get_child(0)
 	var new_material = StandardMaterial3D.new()
 	new_material.blend_mode = StandardMaterial3D.BLEND_MODE_ADD
 	new_material.transparency = StandardMaterial3D.TRANSPARENCY_ALPHA
 	new_material.cull_mode = StandardMaterial3D.CULL_DISABLED
-	mesh.get_child(0).material_override = new_material
-	mesh.get_child(1).material_override = new_material
+	vector.get_child(0).material_override = new_material
+	vector.get_child(1).material_override = new_material
 	
-	formatVector(mesh, field)
-	
+	formatVector(vector, field)
 	add_child(vector)
 	
-	return mesh
+	return vector
 	
 func draw_field(pos) -> void:
 	var start_time = Time.get_ticks_msec()  # Get time in milliseconds
-
 	for i in range(-field_radius + pos.x, field_radius + pos.x):
+		#if Time.get_ticks_msec() - start_time > 10:
+		#	await get_tree().process_frame
 		var x = str(i)
 		if x not in vectors:
 			vectors[x] = {}
@@ -83,6 +85,7 @@ func draw_field(pos) -> void:
 				vectors[x][y] = {}
 			for k in range(-field_radius + pos.z, field_radius + pos.z):
 				var z = str(k)
+				#print(Vector3(i, j, k))
 				if z not in vectors[x][y]:
 					var test = initializeVector(Vector3(i, j, k), magneticField[x][y][z])
 					vectors[x][y][z] = test
@@ -92,13 +95,15 @@ func draw_field(pos) -> void:
 					vectors[x][y][z] = test
 					
 				else:
+					if vectors[x][y][z].updatee == update:
+						continue
 					formatVector(vectors[x][y][z], magneticField[x][y][z])
 	
 	#var elapsed_time = Time.get_ticks_msec() - start_time
 	#print("Function took ", elapsed_time, " ms")
 
 func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: bool):
-	
+	print("started calcing field")
 	var start_time = Time.get_ticks_msec()  # Get time in milliseconds
 
 	for i in range(xStart, xStop):
@@ -119,6 +124,7 @@ func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: b
 					
 				magneticField[x][y][str(k)] = field
 		
+	print("finished it")
 	#var elapsed_time = Time.get_ticks_msec() - start_time
 	#print("calculating field took ", elapsed_time, " ms")
 	
@@ -165,9 +171,13 @@ func _process(_delta: float) -> void:
 		#calcField(diff.x * field_radius + oldCameraPosition.x, diff.x * field_radius + current_position.x, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
 		#calcField(current_position.x - field_radius, current_position.x + field_radius, diff.y * field_radius + oldCameraPosition.y, diff.y * field_radius + current_position.y, current_position.z - field_radius, current_position.z + field_radius, false)
 		#calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, diff.z * field_radius + oldCameraPosition.z, diff.z * field_radius + current_position.z, false)
-		calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
+		 # Get time in milliseconds
 
+		calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
+		var start_time = Time.get_ticks_msec() 
 		draw_field(current_position)
+		var elapsed_time = Time.get_ticks_msec() - start_time
+		print("drawing field took ", elapsed_time, " ms")
 		
 		oldCameraPosition = current_position
 	
@@ -211,10 +221,12 @@ func newParticle() -> void:
 	var particleScene = whereToGetThem[spawnIndex].instantiate()
 	var particle = particleScene.get_child(0)
 	
+	particle.charge = charge
 	particle.position = currentPosition
 	particle.static_velocity = vectorFromAngles(camera.rotation)
 
 	particles.append(particle)
+	update += 1
 	add_child(particleScene)
 	calcNewField(camera.position)
 	draw_field(camera.position)

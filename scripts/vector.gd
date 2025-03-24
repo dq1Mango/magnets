@@ -2,17 +2,13 @@ extends StaticBody3D
 
 # Called when the node enters the scene tree for the first time.
 
-func test():
-	print("oh yeah")
+@export var updatee: int = 0
 
-func initialize(pos, field: Vector3) -> void:
-	position = pos
-	#rotation = orientVector(field)
-	print("i initialized")
-	
+func test() -> int:
+	return updatee
 
 func _ready() -> void:
-	
+
 	var shaftMesh = CylinderMesh.new()
 	shaftMesh.top_radius = 0.1
 	shaftMesh.bottom_radius = 0.1
