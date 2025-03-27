@@ -86,21 +86,21 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 text = "Parameters"
 
-[node name="SpawnButton" type="Control" parent="Base"]
+[node name="ParticleButton" type="Control" parent="Base"]
 layout_mode = 1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.75
 
-[node name="Button" type="Button" parent="Base/SpawnButton"]
+[node name="Button" type="Button" parent="Base/ParticleButton"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.9
 anchor_bottom = 0.9
-text = "Spawn Object"
+text = "Particles"
 
 [node name="QuitPad" type="Control" parent="Base"]
 layout_mode = 1
@@ -120,3 +120,4 @@ text = "Quit to Main Menu"
 [connection signal="pressed" from="Base/BackPad/Button" to="." method="hideSelf"]
 [connection signal="button_up" from="Base/RepoPad/Button" to="." method="starRepo"]
 [connection signal="pressed" from="Base/TBDButton/Button" to="." method="switchToParams"]
+[connection signal="pressed" from="Base/ParticleButton/Button" to="." method="switchToParticles"]

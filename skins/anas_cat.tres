@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dbbkb57v3ay6i"]
+
+[ext_resource type="Texture2D" uid="uid://capus4ysfqp4p" path="res://assests/anas_cat.png" id="1_eyl14"]
+
+[resource]
+albedo_texture = ExtResource("1_eyl14")

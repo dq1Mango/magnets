@@ -96,7 +96,6 @@ mesh = SubResource("CylinderMesh_1q05r")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
-visible = false
 light_energy = 16.0
 light_indirect_energy = 16.0
 omni_range = 336.617

@@ -1,0 +1,165 @@
+[gd_scene load_steps=11 format=3 uid="uid://lvt24837hcnm"]
+
+[ext_resource type="Script" path="res://scripts/particle_options.gd" id="1_nh0la"]
+[ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://skins/particle.tres" id="2_l273l"]
+[ext_resource type="Material" uid="uid://38qtnukvmb46" path="res://skins/bilak.tres" id="3_dnd83"]
+[ext_resource type="Material" uid="uid://ccau488u7fbss" path="res://skins/thomas.tres" id="3_wwm1j"]
+[ext_resource type="Texture2D" uid="uid://buer57fe4lp2k" path="res://assests/cropped_sarah.jpeg" id="5_20n7i"]
+[ext_resource type="Material" uid="uid://deerrms1m247l" path="res://skins/katie.tres" id="5_mr1yx"]
+[ext_resource type="Material" uid="uid://bpby15o80mhq3" path="res://skins/llamas.tres" id="6_eoaro"]
+[ext_resource type="Material" uid="uid://nh5ojml8nuxc" path="res://skins/ana.tres" id="7_cxbji"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0or2p"]
+albedo_texture = ExtResource("5_20n7i")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4wgjb"]
+
+[node name="particle_options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nh0la")
+skins = Array[StandardMaterial3D]([ExtResource("2_l273l"), ExtResource("3_wwm1j"), SubResource("StandardMaterial3D_0or2p"), ExtResource("5_mr1yx"), ExtResource("6_eoaro"), ExtResource("7_cxbji"), ExtResource("3_dnd83")])
+skinNames = Array[String](["Default", "Thomas", "Sarah", "Katie", "Llamas", "Ana", "Bilak"])
+
+[node name="container" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.0
+offset_top = -138.0
+offset_right = 201.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mass Pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_right = 0.5
+anchor_bottom = 0.25
+
+[node name="mass_slider" type="HSlider" parent="container/Mass Pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 16.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+scrollable = false
+
+[node name="Label" type="Label" parent="container/Mass Pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Mass: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Charge Pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="charge_slider" type="HSlider" parent="container/Charge Pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 16.0
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_4wgjb")
+min_value = -10.0
+max_value = 10.0
+value = 1.0
+scrollable = false
+
+[node name="Label" type="Label" parent="container/Charge Pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Charge: +1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="velo_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.75
+
+[node name="velo_slider" type="HSlider" parent="container/velo_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 16.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+scrollable = false
+
+[node name="Label" type="Label" parent="container/velo_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Velocity: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="skin_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.25
+
+[node name="skin_cycle" type="Button" parent="container/skin_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Particle Skin: Default"
+
+[node name="DonePad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.75
+anchor_right = 0.9
+anchor_bottom = 1.0
+
+[node name="Button" type="Button" parent="container/DonePad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Done"
+
+[connection signal="pressed" from="container/skin_pad/skin_cycle" to="." method="cycleSkins"]
+[connection signal="pressed" from="container/DonePad/Button" to="." method="goBack"]

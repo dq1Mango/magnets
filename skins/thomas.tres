@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ccau488u7fbss"]
+
+[ext_resource type="Texture2D" uid="uid://pfuyokaukywi" path="res://assests/tohmas.png" id="1_3ye8g"]
+
+[resource]
+albedo_texture = ExtResource("1_3ye8g")
+emission = Color(0.279357, 0.279357, 0.279357, 1)

@@ -14,6 +14,7 @@ var place_distance = 2
 @export var whereToGetThem: Array[PackedScene] = []
 var thingToSpawns = []
 var spawnIndex = 0
+var skin
 
 var vectors: Dictionary = {}
 var update = 0
@@ -103,7 +104,7 @@ func draw_field(pos) -> void:
 	#print("Function took ", elapsed_time, " ms")
 
 func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: bool):
-	print("started calcing field")
+	#print("started calcing field")
 	var start_time = Time.get_ticks_msec()  # Get time in milliseconds
 
 	for i in range(xStart, xStop):
@@ -124,7 +125,7 @@ func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: b
 					
 				magneticField[x][y][str(k)] = field
 		
-	print("finished it")
+	#print("finished it")
 	#var elapsed_time = Time.get_ticks_msec() - start_time
 	#print("calculating field took ", elapsed_time, " ms")
 	
@@ -158,6 +159,8 @@ func _ready() -> void:
 	particlePreveiw.visible = false
 	thingToSpawns.append(particlePreveiw)
 	add_child(particlePreveiw)
+	
+	skin = load("res://skins/particle.tres")
 	#particlePreveiw.position = Vector3(0, 0, -place_distance)
 
 
@@ -174,10 +177,10 @@ func _process(_delta: float) -> void:
 		 # Get time in milliseconds
 
 		calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
-		var start_time = Time.get_ticks_msec() 
+		#var start_time = Time.get_ticks_msec() 
 		draw_field(current_position)
-		var elapsed_time = Time.get_ticks_msec() - start_time
-		print("drawing field took ", elapsed_time, " ms")
+		#var elapsed_time = Time.get_ticks_msec() - start_time
+		#print("drawing field took ", elapsed_time, " ms")
 		
 		oldCameraPosition = current_position
 	
@@ -224,6 +227,7 @@ func newParticle() -> void:
 	particle.charge = charge
 	particle.position = currentPosition
 	particle.static_velocity = vectorFromAngles(camera.rotation)
+	particle.get_child(0).get_child(0).material = skin
 
 	particles.append(particle)
 	update += 1
@@ -245,14 +249,18 @@ func handleBuild():
 		newParticle()
 	
 	else:
-		
-		
 		print("made it visible")
 	
 	buildMode = not buildMode
 	
 	thing.visible = buildMode
 	
+func changeSkin(newSkin: StandardMaterial3D) -> void:
+	
+	skin = newSkin
+	
+	for particle in particles:
+		particle.get_child(0).get_child(0).material = newSkin
 	
 func _unhandled_key_input(event: InputEvent) -> void:
 	#spawn particle
