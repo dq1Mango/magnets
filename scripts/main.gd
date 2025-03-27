@@ -26,6 +26,9 @@ var magneticField = {}
 var minMagnet = 1
 var maxMagnet = 0
 var oldCameraPosition = Vector3.ZERO
+
+var doElectricity = false
+var doMagnetism = false
 #i dont think ive seen so many global variables before
 
 func calc_magnet(coords: Vector3):
@@ -73,6 +76,9 @@ func initializeVector(pos, field: Vector3) -> StaticBody3D:
 	return vector
 	
 func draw_field(pos) -> void:
+	if not doMagnetism:
+		return
+	
 	var start_time = Time.get_ticks_msec()  # Get time in milliseconds
 	for i in range(-field_radius + pos.x, field_radius + pos.x):
 		#if Time.get_ticks_msec() - start_time > 10:
@@ -104,6 +110,8 @@ func draw_field(pos) -> void:
 	#print("Function took ", elapsed_time, " ms")
 
 func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: bool):
+	if not doMagnetism:
+		return
 	#print("started calcing field")
 	var start_time = Time.get_ticks_msec()  # Get time in milliseconds
 
@@ -130,13 +138,14 @@ func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: b
 	#print("calculating field took ", elapsed_time, " ms")
 	
 func calcNewField(pos) -> void:
-	magneticField = {} #TODO: make faster by using packed arrray
-	#var magneticField: PackedVector3Array = [[[]]] #gotta test this "optimization"
-	
-	minMagnet = 1
-	maxMagnet = 0
-	
-	calcField(pos.x - field_radius, pos.x + field_radius, pos.y - field_radius, pos.y + field_radius, pos.z - field_radius, pos.z + field_radius, true)
+	if doMagnetism:
+		magneticField = {} #TODO: make faster by using packed arrray
+		#var magneticField: PackedVector3Array = [[[]]] #gotta test this "optimization"
+		
+		minMagnet = 1
+		maxMagnet = 0
+		
+		calcField(pos.x - field_radius, pos.x + field_radius, pos.y - field_radius, pos.y + field_radius, pos.z - field_radius, pos.z + field_radius, true)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -175,12 +184,13 @@ func _process(_delta: float) -> void:
 		#calcField(current_position.x - field_radius, current_position.x + field_radius, diff.y * field_radius + oldCameraPosition.y, diff.y * field_radius + current_position.y, current_position.z - field_radius, current_position.z + field_radius, false)
 		#calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, diff.z * field_radius + oldCameraPosition.z, diff.z * field_radius + current_position.z, false)
 		 # Get time in milliseconds
-
-		calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
-		#var start_time = Time.get_ticks_msec() 
-		draw_field(current_position)
-		#var elapsed_time = Time.get_ticks_msec() - start_time
-		#print("drawing field took ", elapsed_time, " ms")
+		
+		if doMagnetism:
+			calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
+			#var start_time = Time.get_ticks_msec() 
+			draw_field(current_position)
+			#var elapsed_time = Time.get_ticks_msec() - start_time
+			#print("drawing field took ", elapsed_time, " ms")
 		
 		oldCameraPosition = current_position
 	
