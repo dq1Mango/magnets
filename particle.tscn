@@ -27,11 +27,11 @@ freeze = true
 script = ExtResource("1_355we")
 charge = 1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="particle"]
+[node name="collision" type="CollisionShape3D" parent="particle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
 shape = SubResource("SphereShape3D_ejk67")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="particle/CollisionShape3D"]
+[node name="CSGSphere3D" type="CSGSphere3D" parent="particle/collision"]
 radial_segments = 64
 rings = 32
 material = SubResource("StandardMaterial3D_6e1u6")

@@ -3,7 +3,7 @@ extends Control
 var main
 var doMagnet = true
 var doElectric = false #we keep tradk of these global variables in two scripts, code goat material
-
+var wholeField = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_parent().get_parent()
@@ -32,3 +32,14 @@ func toggleElectric() -> void:
 	$"Control/doElectricPad/Button".text = "doElectric: " + str(doElectric)
 	
 	main.toggleElectricity()
+
+func toggleFieldLocation() -> void:
+	wholeField = not wholeField
+	var message = ""
+	if wholeField:
+		message = "Not Particles"
+	else:
+		message = "Particles"
+	$Control/locationPad/Button.text =  "Field at: " + message
+	
+	main.changeFieldDepiction()

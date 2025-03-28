@@ -1,10 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://dc18ri31g1st5"]
+[gd_scene load_steps=12 format=3 uid="uid://dc18ri31g1st5"]
 
-[ext_resource type="Script" path="res://scripts/velo.gd" id="1_5i678"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_qioq1"]
 [ext_resource type="PackedScene" uid="uid://clgqe6cw3oo0" path="res://vector.tscn" id="2_2qdwi"]
 [ext_resource type="PackedScene" uid="uid://dari0htpxc42v" path="res://particle.tscn" id="3_ob8px"]
-[ext_resource type="Script" path="res://scripts/particle.gd" id="3_ynkgf"]
 [ext_resource type="PackedScene" uid="uid://qceblbkkyp3n" path="res://better_particle.tscn" id="4_j6pvn"]
 [ext_resource type="Script" path="res://scripts/cameramover.gd" id="5_s126l"]
 [ext_resource type="Script" path="res://scripts/spawn.gd" id="7_nnsm1"]
@@ -15,23 +13,6 @@ size = Vector3(60, 2, 60)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ava38"]
 size = Vector3(60, 2, 60)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_d24tg"]
-radius = 0.519379
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e1u6"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_8k1fr"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 0.75
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_81y7w"]
-top_radius = 0.0
-bottom_radius = 0.2
-height = 0.25
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_1q05r"]
 
 [sub_resource type="Theme" id="Theme_iiu1k"]
 
@@ -58,42 +39,6 @@ shape = SubResource("BoxShape3D_espfw")
 transform = Transform3D(1, 7.45058e-09, 0, 9.31323e-10, 1, 0, 0, -4.47035e-08, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_ava38")
 
-[node name="particle" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-visible = false
-sleeping = true
-freeze = true
-constant_force = Vector3(0, 9.81, 0)
-script = ExtResource("3_ynkgf")
-static_velocity = Vector3(0, 0, -1)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="particle"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
-shape = SubResource("SphereShape3D_d24tg")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="particle/CollisionShape3D"]
-radial_segments = 64
-rings = 32
-material = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="velo" type="StaticBody3D" parent="particle"]
-physics_interpolation_mode = 2
-script = ExtResource("1_5i678")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="particle/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
-mesh = SubResource("CylinderMesh_8k1fr")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="particle/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
-mesh = SubResource("CylinderMesh_81y7w")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="particle/velo"]
-visible = false
-mesh = SubResource("CylinderMesh_1q05r")
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
 light_energy = 16.0
@@ -108,114 +53,6 @@ script = ExtResource("5_s126l")
 
 [node name="Camera3D" type="Camera3D" parent="view_point"]
 physics_interpolation_mode = 2
-
-[node name="particle2" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 4)
-visible = false
-sleeping = true
-freeze = true
-constant_force = Vector3(0, 9.81, 0)
-script = ExtResource("3_ynkgf")
-static_velocity = Vector3(0, 0, -1)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="particle2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
-shape = SubResource("SphereShape3D_d24tg")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="particle2/CollisionShape3D"]
-material_override = SubResource("StandardMaterial3D_6e1u6")
-radial_segments = 64
-rings = 32
-
-[node name="velo" type="StaticBody3D" parent="particle2"]
-physics_interpolation_mode = 2
-script = ExtResource("1_5i678")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="particle2/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
-mesh = SubResource("CylinderMesh_8k1fr")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="particle2/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
-mesh = SubResource("CylinderMesh_81y7w")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="particle2/velo"]
-visible = false
-mesh = SubResource("CylinderMesh_1q05r")
-
-[node name="particle3" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 2)
-visible = false
-sleeping = true
-freeze = true
-constant_force = Vector3(0, 9.81, 0)
-script = ExtResource("3_ynkgf")
-static_velocity = Vector3(0, 0, -1)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="particle3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
-shape = SubResource("SphereShape3D_d24tg")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="particle3/CollisionShape3D"]
-radial_segments = 64
-rings = 32
-material = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="velo" type="StaticBody3D" parent="particle3"]
-physics_interpolation_mode = 2
-script = ExtResource("1_5i678")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="particle3/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
-mesh = SubResource("CylinderMesh_8k1fr")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="particle3/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
-mesh = SubResource("CylinderMesh_81y7w")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="particle3/velo"]
-visible = false
-mesh = SubResource("CylinderMesh_1q05r")
-
-[node name="particle4" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 6)
-visible = false
-sleeping = true
-freeze = true
-constant_force = Vector3(0, 9.81, 0)
-script = ExtResource("3_ynkgf")
-static_velocity = Vector3(0, 0, -1)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="particle4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.000514984)
-shape = SubResource("SphereShape3D_d24tg")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="particle4/CollisionShape3D"]
-radial_segments = 64
-rings = 32
-material = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="velo" type="StaticBody3D" parent="particle4"]
-physics_interpolation_mode = 2
-script = ExtResource("1_5i678")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="particle4/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
-mesh = SubResource("CylinderMesh_8k1fr")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="particle4/velo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
-mesh = SubResource("CylinderMesh_81y7w")
-surface_material_override/0 = SubResource("StandardMaterial3D_6e1u6")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="particle4/velo"]
-visible = false
-mesh = SubResource("CylinderMesh_1q05r")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

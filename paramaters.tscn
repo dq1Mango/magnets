@@ -33,12 +33,10 @@ anchor_bottom = 0.25
 [node name="Button" type="Button" parent="Control/doMangetPad"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1
+anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
-offset_right = 8.0
-offset_bottom = 8.0
 text = "doMagnet: true"
 
 [node name="doElectricPad" type="Control" parent="Control"]
@@ -52,11 +50,24 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
 anchor_top = 0.1
-anchor_right = 0.9
+anchor_right = 0.95
 anchor_bottom = 0.9
-offset_right = 8.0
-offset_bottom = 8.0
 text = "doElectric: false"
+
+[node name="locationPad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.75
+
+[node name="Button" type="Button" parent="Control/locationPad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+text = "Field at: Particles"
 
 [node name="DonePad" type="Control" parent="Control"]
 layout_mode = 1
@@ -72,10 +83,9 @@ anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
-offset_right = 8.0
-offset_bottom = 8.0
 text = "Done"
 
 [connection signal="pressed" from="Control/doMangetPad/Button" to="." method="toggleMagnet"]
 [connection signal="pressed" from="Control/doElectricPad/Button" to="." method="toggleElectric"]
+[connection signal="pressed" from="Control/locationPad/Button" to="." method="toggleFieldLocation"]
 [connection signal="pressed" from="Control/DonePad/Button" to="." method="goBack"]

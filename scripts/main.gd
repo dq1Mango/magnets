@@ -27,34 +27,62 @@ var minMagnet = 1
 var maxMagnet = 0
 var oldCameraPosition = Vector3.ZERO
 
+var permeability: float = 10
+var permitivity: float = 10
 var doElectricity = false
-var doMagnetism = false
+var doMagnetism = true
+var maxField = 10
+var maxLength = 10
+
+var paused = true
+var wholeField = true
+
 #i dont think ive seen so many global variables before
 
-func calc_magnet(coords: Vector3):
+func calc_magnet(coords: Vector3) -> Vector3:
+
+	if not doMagnetism:
+		return Vector3.ZERO
 
 	var field = Vector3.ZERO
 	for particle in particles:
 		var distance = coords - particle.position
 		if distance == Vector3.ZERO:
-			return Vector3.ZERO
-		field += particle.static_velocity.cross(distance.normalized()) / distance.length_squared()
+			continue
+		field += permeability * particle.static_velocity.cross(distance.normalized()) / distance.length_squared()
 		 
 	return field
 	
+func calc_electric(coords: Vector3) -> Vector3:
+	
+	if not doElectricity:
+		return Vector3.ZERO
+
+	var field = Vector3.ZERO
+	for particle in particles:
+		var distance = particle.position - coords
+		if distance == Vector3.ZERO:
+			continue
+		field += permitivity * particle.charge / distance.length_squared() * distance.normalized() * -1
+
+	return field
+	
 func formatVector(vector: StaticBody3D, field: Vector3) -> void:
-	var colorPercent = ((field.length() - minMagnet ) / (maxMagnet - minMagnet)) ** (1.0/2.0)
+	
+	var magnitude = field.length()
+	
+	var colorPercent = ((magnitude - minMagnet ) / (maxMagnet - minMagnet)) ** (1.0/2.0)
 	var color = colorMax * colorPercent + colorMin * (1 - colorPercent)
 	color.a = colorPercent * 5
+	
+	if magnitude < 0.00001:
+		color = Color(0, 0, 0, 0)
+	
 	vector.get_child(0).material_override.albedo_color = color
 	vector.rotation = orientVector.orientVector(field) #STILL USING EULER ROTATION
 	vector.updatee = update
 
 func initializeVector(pos, field: Vector3) -> StaticBody3D:
-	 
-	var magnitude = field.length()
-	if magnitude < 0.0000001:
-		return
 
 	var vector = vector_scene.instantiate()
 	
@@ -92,7 +120,6 @@ func draw_field(pos) -> void:
 				vectors[x][y] = {}
 			for k in range(-field_radius + pos.z, field_radius + pos.z):
 				var z = str(k)
-				#print(Vector3(i, j, k))
 				if z not in vectors[x][y]:
 					var test = initializeVector(Vector3(i, j, k), magneticField[x][y][z])
 					vectors[x][y][z] = test
@@ -102,12 +129,28 @@ func draw_field(pos) -> void:
 					vectors[x][y][z] = test
 					
 				else:
+
 					if vectors[x][y][z].updatee == update:
 						continue
 					formatVector(vectors[x][y][z], magneticField[x][y][z])
 	
 	#var elapsed_time = Time.get_ticks_msec() - start_time
 	#print("Function took ", elapsed_time, " ms")
+	
+func drawFieldAtParticles() -> void:
+	if doMagnetism:
+		for particle in particles:
+			var magnet = calc_magnet(particle.position)
+			particle.get_child(2).rotation = orientVector.orientVector(magnet)
+			particle.get_child(2).scaleLength(min(maxLength, sqrt(magnet.length()) / maxField * maxLength))
+
+			
+	if doElectricity:
+		for particle in particles:
+			var electric = calc_electric(particle.position)
+			particle.get_child(3).rotation = orientVector.orientVector(electric)
+			particle.get_child(3).scaleLength(min(maxLength, sqrt(electric.length()) / maxField * maxLength))
+		
 
 func calcField(xStart, xStop, yStart, yStop, zStart, zStop: int, updateExtema: bool):
 	if not doMagnetism:
@@ -146,7 +189,9 @@ func calcNewField(pos) -> void:
 		maxMagnet = 0
 		
 		calcField(pos.x - field_radius, pos.x + field_radius, pos.y - field_radius, pos.y + field_radius, pos.z - field_radius, pos.z + field_radius, true)
-
+	
+	update += 1
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -172,41 +217,78 @@ func _ready() -> void:
 	skin = load("res://skins/particle.tres")
 	#particlePreveiw.position = Vector3(0, 0, -place_distance)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	var camera = $view_point
-	var current_position = round(camera.position)
-	if current_position != oldCameraPosition:
-		var diff = current_position - oldCameraPosition
-		# this is not ugly at all
-		#calcField(diff.x * field_radius + oldCameraPosition.x, diff.x * field_radius + current_position.x, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
-		#calcField(current_position.x - field_radius, current_position.x + field_radius, diff.y * field_radius + oldCameraPosition.y, diff.y * field_radius + current_position.y, current_position.z - field_radius, current_position.z + field_radius, false)
-		#calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, diff.z * field_radius + oldCameraPosition.z, diff.z * field_radius + current_position.z, false)
-		 # Get time in milliseconds
-		
-		if doMagnetism:
-			calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
-			#var start_time = Time.get_ticks_msec() 
-			draw_field(current_position)
-			#var elapsed_time = Time.get_ticks_msec() - start_time
-			#print("drawing field took ", elapsed_time, " ms")
-		
-		oldCameraPosition = current_position
+func simulate(delta) -> void:
 	
-	if buildMode:
-		var thing = thingToSpawns[spawnIndex]
-		thing.position = round(camera.position + vectorFromAngles(camera.rotation) * place_distance)
+	var pos = round($view_point.position)
+	
+	if wholeField:
+		calcNewField(pos)
+		draw_field(pos)
+	else:
+		drawFieldAtParticles()
+	
+	if doMagnetism:
+		for particle in particles:
+			var magnet = calc_magnet(particle.position)
+			var magnetForce = particle.charge * particle.linear_velocity.cross(magnet)
+			particle.linear_velocity += magnetForce * delta
+
+			
+	if doElectricity:
+		for particle in particles:
+			var electric = calc_electric(particle.position)
+			var electricForce = particle.charge * electric		
+			particle.linear_velocity += electricForce * delta
+
+	for particle in particles:
+		particle.position += particle.linear_velocity * delta
+
+func visualize(delta: float) -> void:
+	
+	if wholeField:
+		var camera = $view_point
+		var current_position = round(camera.position)
+		if current_position != oldCameraPosition:
+			var diff = current_position - oldCameraPosition
+			# this is not ugly at all
+			#calcField(diff.x * field_radius + oldCameraPosition.x, diff.x * field_radius + current_position.x, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
+			#calcField(current_position.x - field_radius, current_position.x + field_radius, diff.y * field_radius + oldCameraPosition.y, diff.y * field_radius + current_position.y, current_position.z - field_radius, current_position.z + field_radius, false)
+			#calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, diff.z * field_radius + oldCameraPosition.z, diff.z * field_radius + current_position.z, false)
+			 # Get time in milliseconds
+			
+			if doMagnetism:
+				calcField(current_position.x - field_radius, current_position.x + field_radius, current_position.y - field_radius, current_position.y + field_radius, current_position.z - field_radius, current_position.z + field_radius, false)
+				#var start_time = Time.get_ticks_msec() 
+				draw_field(current_position)
+				#var elapsed_time = Time.get_ticks_msec() - start_time
+				#print("drawing field took ", elapsed_time, " ms")
+			
+			oldCameraPosition = current_position
+	else:
+		drawFieldAtParticles()
+	
 	pass
 
 func clearVectors() -> void:
-	for child in get_children():
-		if child.get_child_count() < 1:
-			continue
-		if child.get_child(0) is StaticBody3D:
-			remove_child(child)
-			child.free()
-
+	for x in vectors.values():
+		#print(x)
+		for y in x.values():
+			for vector in y.values():
+				formatVector(vector, Vector3(0, 0, 0))
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	
+	if paused:
+		visualize(delta)
+	else:
+		simulate(delta)
+		
+	if buildMode:
+		var camera = $view_point
+		var thing = thingToSpawns[spawnIndex]
+		thing.position = round(camera.position + vectorFromAngles(camera.rotation) * place_distance)
+	
 	return 
 	
 func vectorFromAngles(angles: Vector3) -> Vector3:
@@ -239,11 +321,41 @@ func newParticle() -> void:
 	particle.static_velocity = vectorFromAngles(camera.rotation)
 	particle.get_child(0).get_child(0).material = skin
 
+	#putting the force vectors on
+	var vector = vector_scene.instantiate()
+	var new_material = StandardMaterial3D.new()
+	
+	new_material.albedo_color = Color(255, 0, 0)
+	
+	vector.get_child(0).material_override = new_material
+	vector.get_child(1).material_override = new_material
+	
+	vector.visible = doMagnetism and not wholeField
+	
+	particle.add_child(vector)
+	
+	#give it a magnet force vector as well
+	var electric_vector = vector_scene.instantiate()
+	var new_electric_material = StandardMaterial3D.new()
+	
+	new_electric_material.albedo_color = Color(0, 255, 0)
+	
+	electric_vector.get_child(0).material_override = new_electric_material
+	electric_vector.get_child(1).material_override = new_electric_material
+	
+	electric_vector.visible = doElectricity and not wholeField
+	
+	particle.add_child(electric_vector)
+
 	particles.append(particle)
 	update += 1
 	add_child(particleScene)
-	calcNewField(camera.position)
-	draw_field(camera.position)
+	
+	if wholeField:
+		calcNewField(round(camera.position))
+		draw_field(round(camera.position))
+	else:
+		drawFieldAtParticles()
 	pass # Replace with function body.
 	
 func restart() -> void:
@@ -271,12 +383,39 @@ func changeSkin(newSkin: StandardMaterial3D) -> void:
 	
 	for particle in particles:
 		particle.get_child(0).get_child(0).material = newSkin
+		
+func changeFieldDepiction() -> void:
+	
+	wholeField = not wholeField
+	
+	for particle in particles:
+		#arguably even better ways of accessing these children
+		particle.get_child(2).visible = doMagnetism and not wholeField
+		particle.get_child(3).visible = doElectricity and not wholeField
+		#all fun and games till i add a child before these
+		
+	if wholeField: 
+		var pos = round($view_point.position) #i have such great ways of accessing and passing around this one value
+		calcNewField(pos)
+		draw_field(pos)
+	else:
+		clearVectors()
+		drawFieldAtParticles()
+	
 	
 func _unhandled_key_input(event: InputEvent) -> void:
 	#spawn particle
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_N:
 			handleBuild()
-		
+			
+		elif  event.keycode == KEY_P:
+			print("playing/pausing")
+			paused = not paused
+
+			#elegant freezing and unfreezing with boolean logic
+			#for particle in particles:
+			#	particle.freeze = paused
+			
 		if event.keycode == KEY_R:
 			restart()
