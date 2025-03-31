@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dckftyvrbhyyd"]
+
+[node name="settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="container" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.33
+anchor_top = 0.25
+anchor_right = 0.66
+anchor_bottom = 0.75
+
+[node name="fov_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_right = 0.5
+anchor_bottom = 0.25
+
+[node name="fov" type="HSlider" parent="container/fov_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+
+[node name="Label" type="Label" parent="container/fov_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "FOV: 70"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sensitivity_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.25
+
+[node name="sensitivity" type="HSlider" parent="container/sensitivity_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+
+[node name="Label" type="Label" parent="container/sensitivity_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Sensitivity: 70"
+horizontal_alignment = 1
+vertical_alignment = 1
