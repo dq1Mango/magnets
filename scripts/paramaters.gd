@@ -43,3 +43,11 @@ func toggleFieldLocation() -> void:
 	$Control/locationPad/Button.text =  "Field at: " + message
 	
 	main.changeFieldDepiction()
+	
+func setPermeability(value: float):
+	$Control/permeability_pad/Label.text = "Permeability: " + str(int(value))
+	main.permeability = value
+	
+func setPermitivy(value: float):
+	$Control/permitivity_pad/Label.text = "Permitivity: " + str(int(value))
+	main.permeability = value

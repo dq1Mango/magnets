@@ -27,6 +27,18 @@ func cycleSkins() -> void:
 	main.changeSkin(skins[skindex])
 	$container/skin_pad/skin_cycle.text = "Particle Skin: " + skinNames[skindex]
 
+func setMass(mass: float):
+	$"container/Mass Pad/Label".text = "Mass: " + str(int(mass))
+	main.mass = mass
+	
+func setCharge(charge: float):
+	$"container/Charge Pad/Label".text = "Charge: " + str(int(charge))
+	main.charge = charge
+
+func setVelo(velo: float):
+	$container/velo_pad/Label.text = "Velocity: " + str(int(velo))
+	main.velo_scalar = velo
+
 func goBack() -> void:
 	visible = false
 	

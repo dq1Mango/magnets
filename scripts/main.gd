@@ -7,9 +7,9 @@ extends Node3D
 @export var colorMin: Color
 
 var buildMode = false #from fortnite apparently
-var mass = 1
-var charge = 1
-var velo_scalar = 1
+@export var mass = 1
+@export var charge = 1
+@export var velo_scalar = 1
 var place_distance = 2
 @export var whereToGetThem: Array[PackedScene] = []
 var thingToSpawns = []
@@ -18,7 +18,7 @@ var skin
 
 var vectors: Dictionary = {}
 var update = 0
-var field_radius = 5 #its not rly a radius but shhhhhh
+var field_radius = 7 #its not rly a radius but shhhhhh
 
 var orientVector = preload("res://orientVector.gd").new()
 
@@ -49,7 +49,7 @@ func calc_magnet(coords: Vector3) -> Vector3:
 		var distance = coords - particle.position
 		if distance == Vector3.ZERO:
 			continue
-		field += permeability * particle.static_velocity.cross(distance.normalized()) / distance.length_squared()
+		field += permeability * particle.charge * particle.static_velocity.cross(distance.normalized()) / distance.length_squared()
 		 
 	return field
 	
@@ -231,7 +231,7 @@ func simulate(delta) -> void:
 		for particle in particles:
 			var magnet = calc_magnet(particle.position)
 			var magnetForce = particle.charge * particle.linear_velocity.cross(magnet)
-			particle.linear_velocity += magnetForce * delta
+			particle.linear_velocity += magnetForce * delta / particle.mass
 
 			
 	if doElectricity:
@@ -316,9 +316,10 @@ func newParticle() -> void:
 	var particleScene = whereToGetThem[spawnIndex].instantiate()
 	var particle = particleScene.get_child(0)
 	
+	particle.mass = mass
 	particle.charge = charge
 	particle.position = currentPosition
-	particle.static_velocity = vectorFromAngles(camera.rotation)
+	particle.static_velocity = vectorFromAngles(camera.rotation) * velo_scalar
 	particle.get_child(0).get_child(0).material = skin
 
 	#putting the force vectors on
@@ -402,7 +403,12 @@ func changeFieldDepiction() -> void:
 		clearVectors()
 		drawFieldAtParticles()
 	
+func toggleMagnetism(): #next thing to fix
+	doMagnetism = not doMagnetism
 	
+func toggleElectricity():
+	doElectricity = not doElectricity
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	#spawn particle
 	if event is InputEventKey and event.pressed:

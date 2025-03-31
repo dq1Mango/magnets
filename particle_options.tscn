@@ -161,5 +161,8 @@ offset_right = 8.0
 offset_bottom = 8.0
 text = "Done"
 
+[connection signal="value_changed" from="container/Mass Pad/mass_slider" to="." method="setMass"]
+[connection signal="value_changed" from="container/Charge Pad/charge_slider" to="." method="setCharge"]
+[connection signal="value_changed" from="container/velo_pad/velo_slider" to="." method="setVelo"]
 [connection signal="pressed" from="container/skin_pad/skin_cycle" to="." method="cycleSkins"]
 [connection signal="pressed" from="container/DonePad/Button" to="." method="goBack"]

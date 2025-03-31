@@ -67,7 +67,7 @@ anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
-text = "Field at: Particles"
+text = "Field at: Not Particles"
 
 [node name="DonePad" type="Control" parent="Control"]
 layout_mode = 1
@@ -85,7 +85,60 @@ anchor_right = 0.95
 anchor_bottom = 0.9
 text = "Done"
 
+[node name="permeability_pad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="HSlider" type="HSlider" parent="Control/permeability_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 16.0
+
+[node name="Label" type="Label" parent="Control/permeability_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Permeability: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="permitivity_pad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.5
+
+[node name="HSlider" type="HSlider" parent="Control/permitivity_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+offset_right = 8.0
+offset_bottom = 16.0
+
+[node name="Label" type="Label" parent="Control/permitivity_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Permitivity: 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="Control/doMangetPad/Button" to="." method="toggleMagnet"]
 [connection signal="pressed" from="Control/doElectricPad/Button" to="." method="toggleElectric"]
 [connection signal="pressed" from="Control/locationPad/Button" to="." method="toggleFieldLocation"]
 [connection signal="pressed" from="Control/DonePad/Button" to="." method="goBack"]
+[connection signal="value_changed" from="Control/permeability_pad/HSlider" to="." method="setPermeability"]
+[connection signal="value_changed" from="Control/permitivity_pad/HSlider" to="." method="setPermitivy"]
