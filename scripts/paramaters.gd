@@ -4,6 +4,7 @@ var main
 var doMagnet = true
 var doElectric = false #we keep tradk of these global variables in two scripts, code goat material
 var wholeField = true
+var uniform = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_parent().get_parent()
@@ -51,3 +52,9 @@ func setPermeability(value: float):
 func setPermitivy(value: float):
 	$Control/permitivity_pad/Label.text = "Permitivity: " + str(int(value))
 	main.permeability = value
+	
+func toggleUniform():
+	uniform = not uniform
+	$Control/uniform_pad/uniform.text = "Uniform Field: " + str(uniform)
+	main.toggleUniform()
+	

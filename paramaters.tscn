@@ -100,6 +100,7 @@ anchor_right = 0.95
 anchor_bottom = 0.9
 offset_right = 8.0
 offset_bottom = 16.0
+value = 10.0
 
 [node name="Label" type="Label" parent="Control/permeability_pad"]
 layout_mode = 1
@@ -126,6 +127,7 @@ anchor_right = 0.95
 anchor_bottom = 0.9
 offset_right = 8.0
 offset_bottom = 16.0
+value = 10.0
 
 [node name="Label" type="Label" parent="Control/permitivity_pad"]
 layout_mode = 1
@@ -136,9 +138,26 @@ text = "Permitivity: 10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="uniform_pad" type="Control" parent="Control"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.75
+
+[node name="uniform" type="Button" parent="Control/uniform_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+text = "Uniform Field: false"
+
 [connection signal="pressed" from="Control/doMangetPad/Button" to="." method="toggleMagnet"]
 [connection signal="pressed" from="Control/doElectricPad/Button" to="." method="toggleElectric"]
 [connection signal="pressed" from="Control/locationPad/Button" to="." method="toggleFieldLocation"]
 [connection signal="pressed" from="Control/DonePad/Button" to="." method="goBack"]
 [connection signal="value_changed" from="Control/permeability_pad/HSlider" to="." method="setPermeability"]
 [connection signal="value_changed" from="Control/permitivity_pad/HSlider" to="." method="setPermitivy"]
+[connection signal="pressed" from="Control/uniform_pad/uniform" to="." method="toggleUniform"]

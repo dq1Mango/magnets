@@ -47,9 +47,9 @@ anchor_bottom = 0.25
 [node name="mass_slider" type="HSlider" parent="container/Mass Pad"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
+anchor_left = 0.1
 anchor_top = 0.1
-anchor_right = 0.95
+anchor_right = 0.9
 anchor_bottom = 0.9
 offset_right = 8.0
 offset_bottom = 16.0
@@ -135,9 +135,9 @@ anchor_bottom = 0.25
 [node name="skin_cycle" type="Button" parent="container/skin_pad"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
+anchor_left = 0.1
 anchor_top = 0.1
-anchor_right = 0.95
+anchor_right = 0.9
 anchor_bottom = 0.9
 offset_right = 8.0
 offset_bottom = 8.0
@@ -153,12 +153,10 @@ anchor_bottom = 1.0
 [node name="Button" type="Button" parent="container/DonePad"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
+anchor_left = 0.1
 anchor_top = 0.1
-anchor_right = 0.95
+anchor_right = 0.9
 anchor_bottom = 0.9
-offset_right = 8.0
-offset_bottom = 8.0
 text = "Done"
 
 [connection signal="value_changed" from="container/Mass Pad/mass_slider" to="." method="setMass"]

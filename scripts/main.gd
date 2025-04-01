@@ -36,6 +36,8 @@ var maxLength = 10
 
 var paused = true
 var wholeField = true
+var uniform = false
+var uniformScalar = 1.0 / 10.0
 
 #i dont think ive seen so many global variables before
 
@@ -44,6 +46,9 @@ func calc_magnet(coords: Vector3) -> Vector3:
 	if not doMagnetism:
 		return Vector3.ZERO
 
+	if uniform:
+		return Vector3(0, 0, 1) * permeability * uniformScalar
+	
 	var field = Vector3.ZERO
 	for particle in particles:
 		var distance = coords - particle.position
@@ -70,8 +75,9 @@ func calc_electric(coords: Vector3) -> Vector3:
 func formatVector(vector: StaticBody3D, field: Vector3) -> void:
 	
 	var magnitude = field.length()
-	
 	var colorPercent = ((magnitude - minMagnet ) / (maxMagnet - minMagnet)) ** (1.0/2.0)
+	if minMagnet == maxMagnet:
+		colorPercent = 1
 	var color = colorMax * colorPercent + colorMin * (1 - colorPercent)
 	color.a = colorPercent * 5
 	
@@ -231,8 +237,15 @@ func simulate(delta) -> void:
 		for particle in particles:
 			var magnet = calc_magnet(particle.position)
 			var magnetForce = particle.charge * particle.linear_velocity.cross(magnet)
-			particle.linear_velocity += magnetForce * delta / particle.mass
-
+			if not uniform: #total hack btw
+				particle.linear_velocity += magnetForce * delta / particle.mass
+			else:
+				var newVelo = particle.linear_velocity + magnetForce * delta / particle.mass
+				var hack = sqrt(particle.linear_velocity.y ** 2 + particle.linear_velocity.x ** 2)
+				hack /= sqrt(newVelo.y ** 2 + newVelo.x ** 2)
+				newVelo.y *= hack
+				newVelo.x *= hack
+				particle.linear_velocity = newVelo
 			
 	if doElectricity:
 		for particle in particles:
@@ -361,7 +374,10 @@ func newParticle() -> void:
 	
 func restart() -> void:
 	
-	particles = []
+	for particle in particles:
+		particle.position = particle.OGposition
+		particle.linear_velocity = particle.static_velocity
+	#particles = []
 	
 	clearVectors()
 	
@@ -409,6 +425,16 @@ func toggleMagnetism(): #next thing to fix
 func toggleElectricity():
 	doElectricity = not doElectricity
 
+func toggleUniform():
+	uniform = not uniform
+	var poition = round($view_point.position)
+	calcNewField(poition)
+	
+	if wholeField:
+		draw_field(poition)
+	else:
+		drawFieldAtParticles()
+	
 func _unhandled_key_input(event: InputEvent) -> void:
 	#spawn particle
 	if event is InputEventKey and event.pressed:

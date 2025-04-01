@@ -12,6 +12,7 @@ func _ready() -> void:
 	$velo.rotation = orientVector.orientVector(static_velocity)
 	$collision.rotation = orientVector.orientVector(static_velocity)
 	linear_velocity = static_velocity
+	OGposition = position
 
 	pass # Replace with function body.
 

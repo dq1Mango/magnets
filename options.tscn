@@ -115,9 +115,11 @@ anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
-text = "Quit to Main Menu"
+text = "Quit"
 
 [connection signal="pressed" from="Base/BackPad/Button" to="." method="hideSelf"]
 [connection signal="button_up" from="Base/RepoPad/Button" to="." method="starRepo"]
+[connection signal="pressed" from="Base/SettingsPad/Button3" to="." method="switchToSettings"]
 [connection signal="pressed" from="Base/TBDButton/Button" to="." method="switchToParams"]
 [connection signal="pressed" from="Base/ParticleButton/Button" to="." method="switchToParticles"]
+[connection signal="pressed" from="Base/QuitPad/Button2" to="." method="quit"]

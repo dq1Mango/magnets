@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dckftyvrbhyyd"]
+[gd_scene load_steps=2 format=3 uid="uid://dckftyvrbhyyd"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_w3cia"]
 
 [node name="settings" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_w3cia")
 
 [node name="container" type="Control" parent="."]
 layout_mode = 1
@@ -27,6 +30,9 @@ anchor_left = 0.1
 anchor_top = 0.1
 anchor_right = 0.9
 anchor_bottom = 0.9
+min_value = 30.0
+max_value = 120.0
+value = 70.0
 
 [node name="Label" type="Label" parent="container/fov_pad"]
 layout_mode = 1
@@ -50,12 +56,126 @@ anchor_left = 0.1
 anchor_top = 0.1
 anchor_right = 0.9
 anchor_bottom = 0.9
+min_value = 1.0
+max_value = 200.0
+value = 100.0
 
 [node name="Label" type="Label" parent="container/sensitivity_pad"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.5
-text = "Sensitivity: 70"
+text = "Sensitivity: 100%"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="frame_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="HSlider" type="HSlider" parent="container/frame_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+
+[node name="Label" type="Label" parent="container/frame_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Frame Rate: TODO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="radius_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.75
+
+[node name="radius" type="HSlider" parent="container/radius_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+min_value = 1.0
+max_value = 10.0
+value = 5.0
+
+[node name="Label" type="Label" parent="container/radius_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Field \"Radius\": 5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="density_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.75
+
+[node name="radius" type="HSlider" parent="container/density_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+
+[node name="Label" type="Label" parent="container/density_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.5
+text = "Field Density: TODO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="bindings_pad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.5
+
+[node name="key_bindings" type="Button" parent="container/bindings_pad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+text = "Key Bindings"
+
+[node name="DonePad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.75
+anchor_right = 0.9
+anchor_bottom = 1.0
+offset_left = -1.14441e-05
+
+[node name="Button" type="Button" parent="container/DonePad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+text = "Done"
+
+[connection signal="value_changed" from="container/fov_pad/fov" to="." method="setFov"]
+[connection signal="value_changed" from="container/sensitivity_pad/sensitivity" to="." method="setSensitivity"]
+[connection signal="value_changed" from="container/radius_pad/radius" to="." method="setRadius"]
+[connection signal="pressed" from="container/DonePad/Button" to="." method="goBack"]
