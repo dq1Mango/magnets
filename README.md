@@ -54,3 +54,13 @@ This is a python script written with <a href=https://pypi.org/project/vpython/>v
 -Download / copy the "webProject.py" file<br>
 -Install necessary dependencies (pip install vpython)<br>
 -Execute the file (python3 webProject.py)<br>
+
+<h3>Screenshots</h3>
+The position traced by a charged particle launched inside a uniform magnetic field<br>
+<img width="828" alt="Screenshot 2025-04-01 at 10 10 38 PM" src="https://github.com/user-attachments/assets/a1069cc1-4741-4bb1-95a0-93a5a9554332" /><br>
+Magnetic field produced from a single moving particle<br>
+<img width="576" alt="Screenshot 2025-04-01 at 10 13 32 PM" src="https://github.com/user-attachments/assets/5076c6e2-830b-407f-9c39-1f71f20bddb2" /><br>
+Magnetic field of a "wire"<br>
+<img width="575" alt="Screenshot 2025-04-01 at 10 16 14 PM" src="https://github.com/user-attachments/assets/7093f96c-1e7e-4cfd-aa49-d00b458fd150" /><br>
+Complex superposition of 3 particles<br>
+<img width="576" alt="Screenshot 2025-04-01 at 10 18 40 PM" src="https://github.com/user-attachments/assets/58b2546e-0164-4e4e-bca8-90e583d35b78" /><br>
