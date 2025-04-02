@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buer57fe4lp2k"
 path.s3tc="res://.godot/imported/cropped_sarah.jpeg-177ea4fd3b61790f18e8a3b2a6dbfec4.s3tc.ctex"
+path.etc2="res://.godot/imported/cropped_sarah.jpeg-177ea4fd3b61790f18e8a3b2a6dbfec4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assests/cropped_sarah.jpeg"
-dest_files=["res://.godot/imported/cropped_sarah.jpeg-177ea4fd3b61790f18e8a3b2a6dbfec4.s3tc.ctex"]
+dest_files=["res://.godot/imported/cropped_sarah.jpeg-177ea4fd3b61790f18e8a3b2a6dbfec4.s3tc.ctex", "res://.godot/imported/cropped_sarah.jpeg-177ea4fd3b61790f18e8a3b2a6dbfec4.etc2.ctex"]
 
 [params]
 

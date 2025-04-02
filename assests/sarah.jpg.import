@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://l6qwonwqso11"
 path.s3tc="res://.godot/imported/sarah.jpg-3012fba20e6ebbc02d1dd8b139339cf1.s3tc.ctex"
+path.etc2="res://.godot/imported/sarah.jpg-3012fba20e6ebbc02d1dd8b139339cf1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assests/sarah.jpg"
-dest_files=["res://.godot/imported/sarah.jpg-3012fba20e6ebbc02d1dd8b139339cf1.s3tc.ctex"]
+dest_files=["res://.godot/imported/sarah.jpg-3012fba20e6ebbc02d1dd8b139339cf1.s3tc.ctex", "res://.godot/imported/sarah.jpg-3012fba20e6ebbc02d1dd8b139339cf1.etc2.ctex"]
 
 [params]
 

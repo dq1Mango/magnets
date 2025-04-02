@@ -66,3 +66,7 @@ quit={
 [physics]
 
 3d/default_gravity_vector=Vector3(0, 0, 0)
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true

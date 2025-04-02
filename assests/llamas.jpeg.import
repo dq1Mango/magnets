@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxq4wfkyhqbkk"
 path.s3tc="res://.godot/imported/llamas.jpeg-a4d9c051b15011415e76b65c939dc50e.s3tc.ctex"
+path.etc2="res://.godot/imported/llamas.jpeg-a4d9c051b15011415e76b65c939dc50e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assests/llamas.jpeg"
-dest_files=["res://.godot/imported/llamas.jpeg-a4d9c051b15011415e76b65c939dc50e.s3tc.ctex"]
+dest_files=["res://.godot/imported/llamas.jpeg-a4d9c051b15011415e76b65c939dc50e.s3tc.ctex", "res://.godot/imported/llamas.jpeg-a4d9c051b15011415e76b65c939dc50e.etc2.ctex"]
 
 [params]
 

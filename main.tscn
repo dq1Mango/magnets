@@ -49,6 +49,7 @@ omni_range = 336.617
 
 [node name="view_point" type="CharacterBody3D" parent="."]
 physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 rotation_edit_mode = 2
 motion_mode = 1
 script = ExtResource("5_s126l")
@@ -81,7 +82,5 @@ offset_left = 24.0
 offset_top = 24.0
 offset_right = 152.0
 offset_bottom = 55.0
-text = "Add Particle (N)"
+text = "Options (Esc)"
 script = ExtResource("7_nnsm1")
-
-[connection signal="pressed" from="Control/Button" to="." method="newParticle"]

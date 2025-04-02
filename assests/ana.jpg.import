@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://h7c4f4cqc81x"
 path.s3tc="res://.godot/imported/ana.jpg-28f177771ab1207a97eece228f56aad9.s3tc.ctex"
+path.etc2="res://.godot/imported/ana.jpg-28f177771ab1207a97eece228f56aad9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assests/ana.jpg"
-dest_files=["res://.godot/imported/ana.jpg-28f177771ab1207a97eece228f56aad9.s3tc.ctex"]
+dest_files=["res://.godot/imported/ana.jpg-28f177771ab1207a97eece228f56aad9.s3tc.ctex", "res://.godot/imported/ana.jpg-28f177771ab1207a97eece228f56aad9.etc2.ctex"]
 
 [params]
 
