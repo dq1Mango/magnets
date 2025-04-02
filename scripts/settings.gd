@@ -6,6 +6,11 @@ var scalar = 1.0 / 500.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main = get_node("/root/main")
+	
+	var bindings_scene = load("res://bindings.tscn")
+	var bindings = bindings_scene.instantiate()
+	bindings.visible = false
+	add_child(bindings)
 	pass # Replace with function body.
 
 
@@ -26,6 +31,10 @@ func setSensitivity(sens: float):
 func setRadius(radius: float):
 	main.field_radius = int(radius)
 	$container/radius_pad/Label.text = "Field \"Radius\"" + str(int(radius))
+
+func switchToBindings():
+	$bindings.visible = true
+	$container.visible = false
 
 func goBack() -> void:
 	visible = false

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dckftyvrbhyyd"]
 
-[ext_resource type="Script" path="res://scripts/settings.gd" id="1_w3cia"]
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_23uxt"]
 
 [node name="settings" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_w3cia")
+script = ExtResource("1_23uxt")
 
 [node name="container" type="Control" parent="."]
 layout_mode = 1
@@ -178,4 +178,5 @@ text = "Done"
 [connection signal="value_changed" from="container/fov_pad/fov" to="." method="setFov"]
 [connection signal="value_changed" from="container/sensitivity_pad/sensitivity" to="." method="setSensitivity"]
 [connection signal="value_changed" from="container/radius_pad/radius" to="." method="setRadius"]
+[connection signal="pressed" from="container/bindings_pad/key_bindings" to="." method="switchToBindings"]
 [connection signal="pressed" from="container/DonePad/Button" to="." method="goBack"]

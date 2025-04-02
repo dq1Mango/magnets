@@ -5,6 +5,7 @@ var main
 @export var skins: Array[StandardMaterial3D] 
 @export var skinNames: Array[String]
 var skindex = 0
+var pigdex = 6
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,6 +28,10 @@ func cycleSkins() -> void:
 	main.changeSkin(skins[skindex])
 	$container/skin_pad/skin_cycle.text = "Particle Skin: " + skinNames[skindex]
 
+	if skindex == pigdex:
+		main.piggify()
+	if skindex == pigdex + 1: #dont make it the last thing lol
+		main.unpigify()
 func setMass(mass: float):
 	$"container/Mass Pad/Label".text = "Mass: " + str(int(mass))
 	main.mass = mass

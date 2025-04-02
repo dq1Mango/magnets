@@ -12,6 +12,7 @@ var buildMode = false #from fortnite apparently
 @export var velo_scalar = 1
 var place_distance = 2
 @export var whereToGetThem: Array[PackedScene] = []
+@export var piggy_scene: PackedScene
 var thingToSpawns = []
 var spawnIndex = 0
 var skin
@@ -38,6 +39,9 @@ var paused = true
 var wholeField = true
 var uniform = false
 var uniformScalar = 1.0 / 10.0
+
+var pig = false #hard coding this caused me physical pain
+
 
 #i dont think ive seen so many global variables before
 
@@ -361,6 +365,10 @@ func newParticle() -> void:
 	
 	particle.add_child(electric_vector)
 
+	if pig:
+		var piggy = piggy_scene.instantiate()
+		particle.get_child(0).add_child(piggy)
+
 	particles.append(particle)
 	update += 1
 	add_child(particleScene)
@@ -400,7 +408,18 @@ func changeSkin(newSkin: StandardMaterial3D) -> void:
 	
 	for particle in particles:
 		particle.get_child(0).get_child(0).material = newSkin
-		
+
+func piggify():
+	pig = true
+	for particle in particles:
+		var pig = piggy_scene.instantiate()
+		particle.get_child(0).add_child(pig)
+	
+func unpigify():
+	pig = false
+	for particle in particles:
+		particle.get_child(0).get_child(1).queue_free()
+
 func changeFieldDepiction() -> void:
 	
 	wholeField = not wholeField
@@ -421,9 +440,16 @@ func changeFieldDepiction() -> void:
 	
 func toggleMagnetism(): #next thing to fix
 	doMagnetism = not doMagnetism
+	for particle in particles:
+		particle.get_child(2).visible = doMagnetism
+	drawFieldAtParticles()
 	
 func toggleElectricity():
 	doElectricity = not doElectricity
+	for particle in particles:
+		particle.get_child(3).visible = doElectricity
+	drawFieldAtParticles()
+	
 
 func toggleUniform():
 	uniform = not uniform

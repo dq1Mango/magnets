@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dc18ri31g1st5"]
+[gd_scene load_steps=13 format=3 uid="uid://dc18ri31g1st5"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_qioq1"]
 [ext_resource type="PackedScene" uid="uid://clgqe6cw3oo0" path="res://vector.tscn" id="2_2qdwi"]
 [ext_resource type="PackedScene" uid="uid://dari0htpxc42v" path="res://particle.tscn" id="3_ob8px"]
 [ext_resource type="PackedScene" uid="uid://qceblbkkyp3n" path="res://better_particle.tscn" id="4_j6pvn"]
+[ext_resource type="PackedScene" uid="uid://cfphyjqm4fiqr" path="res://piggy.tscn" id="5_44s8t"]
 [ext_resource type="Script" path="res://scripts/cameramover.gd" id="5_s126l"]
 [ext_resource type="Script" path="res://scripts/spawn.gd" id="7_nnsm1"]
 [ext_resource type="Script" path="res://scripts/ana_error.gd" id="8_wh8sc"]
@@ -27,6 +28,7 @@ particle_scene = ExtResource("3_ob8px")
 colorMax = Color(1, 0, 0, 1)
 colorMin = Color(0, 0, 1, 1)
 whereToGetThem = Array[PackedScene]([ExtResource("3_ob8px"), ExtResource("4_j6pvn")])
+piggy_scene = ExtResource("5_44s8t")
 
 [node name="da ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

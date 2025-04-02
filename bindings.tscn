@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://bslup012mse1d"]
+
+[ext_resource type="Script" path="res://scripts/bindings.gd" id="1_4q3ah"]
+
+[node name="bindings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4q3ah")
+
+[node name="container" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.33
+anchor_top = 0.25
+anchor_right = 0.66
+anchor_bottom = 0.75
+
+[node name="RichTextLabel" type="RichTextLabel" parent="container"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]Keybindings (no you cant change them lol)[/center]
+
+Movement:
+[ul]
+W - Forward
+S - Backward
+A - Left
+D - Right
+Space - Up
+Shift - Down
+[/ul]
+
+Simulation:
+N - New Particle
+P - Play / Pause the simulation
+R - Reset particles to original position
+Q - Quit
+
+"
+
+[node name="DonePad" type="Control" parent="container"]
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.75
+anchor_right = 0.9
+anchor_bottom = 1.0
+offset_left = -1.14441e-05
+
+[node name="Button" type="Button" parent="container/DonePad"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+text = "Done"
+
+[connection signal="pressed" from="container/DonePad/Button" to="." method="goBack"]

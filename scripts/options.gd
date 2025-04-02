@@ -14,7 +14,7 @@ func _ready() -> void:
 	partic.visible = false
 	add_child(partic)
 	
-	var settings_scene = load("res://skins/settings.tscn")
+	var settings_scene = load("res://settings.tscn")
 	var sett = settings_scene.instantiate()
 	sett.visible = false
 	add_child(sett)
@@ -47,6 +47,12 @@ func switchToSettings() -> void:
 
 
 func starRepo() -> void:
+	'''var path = "python3"
+	if OS.get_name() == "Windows":
+		path = "python"
+	var output = []
+	OS.execute("bash", ["test.sh"], output, true)
+	print(output)'''
 	OS.shell_open("https://github.com/dq1Mango/magnets")
 
 func quit():

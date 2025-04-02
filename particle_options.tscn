@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://lvt24837hcnm"]
+[gd_scene load_steps=12 format=3 uid="uid://lvt24837hcnm"]
 
 [ext_resource type="Script" path="res://scripts/particle_options.gd" id="1_nh0la"]
 [ext_resource type="Material" uid="uid://by05fmyyf6yid" path="res://skins/particle.tres" id="2_l273l"]
@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://deerrms1m247l" path="res://skins/katie.tres" id="5_mr1yx"]
 [ext_resource type="Material" uid="uid://bpby15o80mhq3" path="res://skins/llamas.tres" id="6_eoaro"]
 [ext_resource type="Material" uid="uid://nh5ojml8nuxc" path="res://skins/ana.tres" id="7_cxbji"]
+[ext_resource type="Material" uid="uid://cqbju8cr1dpa" path="res://skins/piggy.tres" id="8_smb3n"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0or2p"]
 albedo_texture = ExtResource("5_20n7i")
@@ -22,8 +23,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nh0la")
-skins = Array[StandardMaterial3D]([ExtResource("2_l273l"), ExtResource("3_wwm1j"), SubResource("StandardMaterial3D_0or2p"), ExtResource("5_mr1yx"), ExtResource("6_eoaro"), ExtResource("7_cxbji"), ExtResource("3_dnd83")])
-skinNames = Array[String](["Default", "Thomas", "Sarah", "Katie", "Llamas", "Ana", "Bilak"])
+skins = Array[StandardMaterial3D]([ExtResource("2_l273l"), ExtResource("3_wwm1j"), SubResource("StandardMaterial3D_0or2p"), ExtResource("5_mr1yx"), ExtResource("6_eoaro"), ExtResource("7_cxbji"), ExtResource("8_smb3n"), ExtResource("3_dnd83")])
+skinNames = Array[String](["Default", "Thomas", "Sarah", "Katie", "Llamas", "Ana", "Piggy", "Bilak"])
 
 [node name="container" type="Control" parent="."]
 layout_mode = 1
